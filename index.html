@@ -4703,6 +4703,7 @@ window.acForgot=()=>{const u=usr();if(!u||u.isAnonymous){tell("Aucun compte pare
    Pour chaque nouveauté : l'ajouter ici, et l'entourer de ffOn("cle") dans le jeu.
    Quand le développeur l'ouvre, sa fiche « news » apparaît automatiquement dans les Nouveautés des joueurs. */
 window.FFL=[ /* exemple : {k:"boutique",n:"Boutique en argent réel",news:{t:"La boutique",l:[["🛒","Texte de la nouveauté"]]}} */
+ {k:"velkis",n:"Monstres → Velkis, Monstrodex → Velkipedia",news:{t:"Les Velkis 🐾",l:[["🐾","Les créatures que tu combats et captures ont enfin un nom : ce sont les <b>Velkis</b> !"],["📖","Ton registre de captures devient le <b>Velkipedia</b>."]]}},
  {k:"heros",n:"Nouveaux héros (84 visuels : animaux + créatures de l’aventure)",news:{t:"Nouveaux héros 🦸",l:[["<img src=\"hn00.webp\" alt=\"\" style=\"height:1.8em;border-radius:50%\">","Tous les héros sont remplacés par de <b>nouveaux héros</b> : loup, renard, lion, griffon, narval… et de <b>créatures légendaires</b> pour l’aventure (phénix, kraken, licorne, dragon…). Si tu avais déjà un héros, il est remplacé par son nouveau visuel, tu ne perds rien."],["🪙","<b>17 héros en plus</b> à acheter ou à gagner dans les coffres !"],["✏️","Va les voir dans « ✏️ Modifier mon héros »."]]}},
  {k:"eclats",n:"Les éclats (remplacent les balls)",news:{t:"Nouveau : les éclats 💎",l:[["<img src=\"eclat_essence.webp\" alt=\"\" style=\"height:1.6em\">","Les balls de capture deviennent des <b>éclats magiques</b> ! Même effet, nouveau look."],["<img src=\"eclat_runique.webp\" alt=\"\" style=\"height:1.6em\">","<b>Éclat d’essence</b> (de base), <b>Éclat runique</b> (+5 %), <b>Éclat astral</b> (+20 %) et <b>Éclat éternel</b> (capture garantie)."],["🎒","Tes balls déjà gagnées sont devenues les éclats correspondants : tu ne perds rien."]]}}
 ];
@@ -4712,8 +4713,16 @@ window.ALLNEWS=()=>{const m=ffMap(),dyn=FFL.filter(f=>m[f.k]&&f.news).map(f=>({d
 window.NVER=()=>{const m=ffMap();let mx=0;FFL.forEach(f=>{if((m[f.k]||0)>mx)mx=m[f.k]});return NEWS_VER+(mx?"-"+mx:"")};
 window.ffTog=k=>{const f=FFL.find(x=>x.k===k);if(!f)return;const on=!(ST.ff||{})[k];
  askD(on?"Ouvrir « "+f.n+" » à tous les joueurs ? Une entrée sera ajoutée à leurs Nouveautés.":"Repasser « "+f.n+" » en préparation ? Les joueurs ne la verront plus.",()=>{ST.ff=Object.assign({},ST.ff||{});if(on)ST.ff[k]=Date.now();else delete ST.ff[k];_save();
-  try{gcPush().then(r=>{try{qToast(r==="ok"?(on?"✅ Ouvert à tous : nouveauté publiée.":"🔒 Repassé en préparation."):"Publication impossible : "+r)}catch(e){}})}catch(e){}try{pRef()}catch(e){}},on?"Ouvrir à tous":"Repasser en préparation")};
+  try{gcPush().then(r=>{try{qToast(r==="ok"?(on?"✅ Ouvert à tous : nouveauté publiée.":"🔒 Repassé en préparation."):"Publication impossible : "+r)}catch(e){}})}catch(e){}try{pRef()}catch(e){}try{vkAll()}catch(e){}},on?"Ouvrir à tous":"Repasser en préparation")};
 window.ffHtml=()=>FFL.length?FFL.map(f=>{const on=!!(ST.ff||{})[f.k];return `<div class="row" style="margin:6px 0;align-items:center"><span>${on?"✅":"🔒"} <b>${esc(f.n)}</b><br><small>${on?"ouvert à tous depuis le "+new Date(ST.ff[f.k]).toLocaleDateString("fr-FR"):"visible seulement par toi"}</small></span><button class="dvb ${on?"":"off"}" style="width:auto;padding:6px 12px" onclick="ffTog('${f.k}')">${on?"Repasser en préparation":"Ouvrir à tous"}</button></div>`}).join(""):`<small class="dvn">Aucune pour l’instant. Les prochaines nouveautés arriveront ici, visibles seulement par toi, jusqu’à ce que tu les ouvres à tous.</small>`;
+/* ---------- 🐾 Velkis : renomme « monstre(s) » et « Monstrodex » à l'affichage quand la fonction « velkis » est ouverte ---------- */
+(function(){const RX=/Monstrodex|[Mm]onstres? Dex|(?<![\wÀ-ÿ])[Mm]onstres?(?![\wÀ-ÿ])/g,MAP=w=>/dex$/i.test(w)?"Velkipedia":/s$/.test(w)?"Velkis":"Velki",fx=t=>/^\s*(Le )?Dex\s*$/.test(t)?t.replace("Dex","Velkipedia"):t.replace(RX,MAP);
+ const on=()=>{try{return !!(window.ffOn&&ffOn("velkis"))}catch(e){return false}};
+ function walk(n){if(!n)return;if(n.nodeType==3){const v=n.nodeValue;if(v&&(v.indexOf("onstr")>=0||/^\s*(Le )?Dex\s*$/.test(v))){const w=fx(v);if(w!==v)n.nodeValue=w}return}if(n.nodeType!=1||/^(SCRIPT|STYLE|TEXTAREA)$/.test(n.tagName))return;
+  for(const a of ["alt","title","aria-label","placeholder"]){const v=n.getAttribute(a);if(v&&v.indexOf("onstr")>=0)n.setAttribute(a,fx(v))}for(let c=n.firstChild;c;c=c.nextSibling)walk(c)}
+ window.vkTxt=t=>on()?fx(String(t)):t;window.vkAll=()=>{if(on())walk(document.body)};
+ new MutationObserver(ms=>{if(!on())return;for(const m of ms){if(m.type=="characterData")walk(m.target);else m.addedNodes.forEach(walk)}}).observe(document.body,{childList:true,subtree:true,characterData:true});
+ setTimeout(vkAll,0)})();
 /* ---------- 🌍 réglages communs à tous les joueurs (publiés par le développeur) ---------- */
 const GSK=["cap","crit","dodge","ccr","lgr","bcr","ult","chh","chb","chf","cr2","cr3"];
 window.gsApply=()=>{const G=ST.dev?(ST.gs||{}):((ST.gc&&ST.gc.gs)||{});[...ST.ps,ST.dp].forEach(p=>{if(!p||p.__rm)return;GSK.forEach(k=>{if(G[k]!=null)p[k]=G[k];else delete p[k]})});

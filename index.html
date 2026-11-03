@@ -3607,7 +3607,7 @@ function launchPick(i,q){
  document.body.appendChild(w);if(first){try{snd("badge");fireworks()}catch(e){}}}
 {const st=document.createElement("style");st.textContent=`.pfb{display:inline-flex!important;width:auto!important;margin:0!important;padding:6px 14px!important;font-size:.85rem!important;align-items:center;gap:4px}.lpl{display:flex;flex-direction:column;gap:8px;margin-top:6px}.lpb{display:flex!important;flex-direction:column;align-items:center;gap:2px;text-align:center!important;padding:10px!important}.lpb .av{font-size:1.8rem}.lpb b{font-size:1.05rem}.lpb small{color:var(--mut)}`;document.head.appendChild(st)}
 /* ---------- famille en ligne (Firebase) : étape 1-2, envoi des profils + liste côté parent ---------- */
-const FBCFG={/* ⚠️ VERSION DEV : à remplir avec le projet Firebase « quiz-master-quest-dev » */apiKey:"",authDomain:"",projectId:"",storageBucket:"",messagingSenderId:"",appId:""},FBV="10.14.1";
+const FBCFG={/* VERSION DEV : projet Firebase séparé « quiz-master-quest-dev » */apiKey:"AIzaSyC901TKADaCW-5OXoS2dhEGfvM-ih-TABk",authDomain:"quiz-master-quest-dev.firebaseapp.com",projectId:"quiz-master-quest-dev",storageBucket:"quiz-master-quest-dev.firebasestorage.app",messagingSenderId:"699125613773",appId:"1:699125613773:web:2c8c3f358d9aa04fce5584"},FBV="10.14.1";
 let FBX=null,FBP=null,FBSt={s:"off",m:""},FBRem=[],FBT=0,FBUn=null;
 const fbRnd=n=>{const A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let r="";const a=new Uint32Array(n);crypto.getRandomValues(a);for(const x of a)r+=A[x%32];return r};
 const fbFmt=c=>c.replace(/(.{4})/g,"$1-").replace(/-$/,"");

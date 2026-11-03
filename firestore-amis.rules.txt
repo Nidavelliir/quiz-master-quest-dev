@@ -1,0 +1,33 @@
+// À AJOUTER (sans rien supprimer) dans tes règles Firestore existantes,
+// à l'intérieur de : match /databases/{database}/documents { ... }
+
+match /players/{pid} {
+  allow get: if request.auth != null;
+  allow create: if request.auth != null
+    && request.resource.data.owner == request.auth.uid;
+  allow update: if request.auth != null
+    && resource.data.owner == request.auth.uid
+    && request.resource.data.owner == request.auth.uid;
+  allow delete: if request.auth != null
+    && resource.data.owner == request.auth.uid;
+
+  match /inbox/{mid} {
+    allow create: if request.auth != null
+      && request.resource.data.keys().hasOnly(['f','fn','h','k','d','ts'])
+      && request.resource.data.k in ['m','g','f']
+      && request.resource.data.d is string
+      && request.resource.data.d.size() <= 9000;
+    allow read, delete: if request.auth != null
+      && get(/databases/$(database)/documents/players/$(pid)).data.owner == request.auth.uid;
+  }
+}
+
+// Verrous globaux (développeur) : lisibles par tous, modifiables seulement par le créateur du document.
+match /app/{doc} {
+  allow read: if request.auth != null;
+  allow create: if request.auth != null
+    && request.resource.data.owner == request.auth.uid;
+  allow update: if request.auth != null
+    && resource.data.owner == request.auth.uid
+    && request.resource.data.owner == request.auth.uid;
+}

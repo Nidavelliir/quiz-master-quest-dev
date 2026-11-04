@@ -2109,16 +2109,16 @@ setInterval(()=>{if(WIN=="city"&&!document.hidden&&CYT==null){const o=document.q
 
 /* ---------- Roue de la chance quotidienne ---------- */
 const WH=[["🪙","15 🪙","c"],["🎁","commun","k"],["🪙","15 🪙","c"],["🔷","rare","r"],["🪙","15 🪙","c"],["🎁","commun","k"],["🪙","15 🪙","c"],["💜","ultime","u"]];let WHB=false,WHR=0;
-const whOk=()=>S.wd!==todayK();
+const whOk=()=>S.wd!==todayK(),whP=()=>!!(window.isPrem&&isPrem()),whO=()=>whP()?{c:30,u:10,r:20,k:30}:{c:15,u:5,r:10,k:30};
 WT.wheel=()=>"🎡 Roue de la chance · 🪙 "+(S.coins||0);
 WB.wheel=()=>{const ok=whOk(),last=S.wl;
  return `<div class="whw"><div class="whp">▼</div><div class="wld" id="whl" style="transform:rotate(${WHR}deg)">${WH.map((w,i)=>`<span style="transform:rotate(${i*45+22.5}deg)"><b>${w[0]}</b></span>`).join("")}</div></div>
- <div class="whi"><b class="cyt">${ok?"Un tour gratuit par jour !":"Reviens demain pour un nouveau tour"}</b>${last?`<div class="cyr">Dernier gain : <b>${last}</b></div>`:""}<div class="cyr">🪙 15 pièces · 🎁 coffre commun (30 %) · 🔷 coffre rare (10 %) · 💜 coffre ultime (5 %)</div><button class="btn" style="text-align:center;padding:8px" onclick="openWin('odds')">📊 Toutes les chances du jeu</button>
+ <div class="whi"><b class="cyt">${ok?"Un tour gratuit par jour !":"Reviens demain pour un nouveau tour"}</b>${last?`<div class="cyr">Dernier gain : <b>${last}</b></div>`:""}${whP()?`<div class="cyr" style="color:#ffd23f;font-weight:800">⭐ Bonus Premium : pièces doublées et coffres rares plus fréquents</div>`:""}<div class="cyr">🪙 ${whO().c} pièces · 🎁 coffre commun (${whO().k} %) · 🔷 coffre rare (${whO().r} %) · 💜 coffre ultime (${whO().u} %)</div><button class="btn" style="text-align:center;padding:8px" onclick="openWin('odds')">📊 Toutes les chances du jeu</button>
  <button class="btn big" ${ok&&!WHB?"":"disabled"} onclick="whSpin()">${ok?"🎡 Tourner la roue":"✅ Déjà tourné aujourd’hui"}</button></div>`};
 function whSpin(){if(!whOk()||WHB)return;if(chs().length>=CHMAX){tell("Libère un emplacement de coffre (ouvre ou supprime un coffre) avant de tourner la roue : tu pourrais gagner un coffre !");return}
- const x=Math.random()*100,t=x<5?"u":x<15?"r":x<45?"k":"c",ix=WH.map((w,i)=>w[2]==t?i:-1).filter(i=>i>=0),k=ix[Math.floor(Math.random()*ix.length)];
- WHB=true;S.wd=todayK();const nm=t=="c"?"15 🪙":t=="k"?"un coffre commun":t=="r"?"un coffre rare":"un coffre ULTIME";
- if(t=="c")S.coins=(S.coins||0)+15;else addCh(S,t=="k"?1:t=="r"?2:3);S.wl=nm;save();qEv("wheel");
+ const O=whO(),x=Math.random()*100,t=x<O.u?"u":x<O.u+O.r?"r":x<O.u+O.r+O.k?"k":"c",ix=WH.map((w,i)=>w[2]==t?i:-1).filter(i=>i>=0),k=ix[Math.floor(Math.random()*ix.length)];
+ WHB=true;S.wd=todayK();const nm=t=="c"?O.c+" 🪙":t=="k"?"un coffre commun":t=="r"?"un coffre rare":"un coffre ULTIME";
+ if(t=="c")S.coins=(S.coins||0)+O.c;else addCh(S,t=="k"?1:t=="r"?2:3);S.wl=nm;save();qEv("wheel");
  const el=$("whl"),c=k*45+22.5;WHR=(Math.floor(WHR/360)+6)*360-c;if(el){el.style.transition="transform 4.2s cubic-bezier(.15,.7,.1,1)";el.style.transform="rotate("+WHR+"deg)"}
  const b=document.querySelector(".whi .btn");if(b)b.disabled=true;
  setTimeout(()=>{WHB=false;snd(t=="c"?"cap":"win");try{if(t!="c")fireworks()}catch(e){}winRender();home();tell("🎡 Tu gagnes "+nm+" !")},4500)}
@@ -4637,7 +4637,7 @@ const chestContent=()=>{const P=S,hp=(P.chh==null?2:P.chh)*em("hero"),bp=P.chb==
  const lot=clip([["🦸 Héros à débloquer",hp],["🍬 Bonbon",bp],["🎯 50/50",fp],[BE("sup")+" "+BN("sup"),3],[BE("hyp")+" "+BN("hyp"),1.5],[BE("mas")+" "+BN("mas"),.5],["🪙 Pièces",15],["🧸 Objet de bric-à-brac",100]]);
  return sec("📦 Contenu d’un coffre",bonus,"Le nombre de lots est tiré au hasard (chances égales). Les objets rares, uniques et matériaux prennent la place d’un lot.")
   +sec("🎲 Pour chaque lot restant",lot.map(([l,v])=>ln(l,pf(v))).join(""),"Pareil pour les 3 coffres. Si tu as déjà tous les héros, la chance « héros » donne "+BUn("sup")+" "+BE("sup")+". Pièces : 1 à 5 🪙 (70 %) ou 6 à 10 🪙 (30 %). Dans chaque catégorie (objet rare, objet unique, bric-à-brac, héros), l’objet précis est choisi au hasard avec des chances égales. Le matériau suit les chances des matériaux (plus bas).")};
-const wheelOdds=()=>sec("🎡 Roue de la chance",ln("🪙 15 pièces",pf(55))+ln("🎁 Coffre commun",pf(30))+ln("🔷 Coffre rare",pf(10))+ln("💜 Coffre ultime (= épique 🟣)",pf(5)),"Un tour gratuit par jour.");
+const wheelOdds=()=>{const O=whO(),p=whP();return sec("🎡 Roue de la chance"+(p?" ⭐ Premium":""),ln("🪙 "+O.c+" pièces",pf(100-O.k-O.r-O.u))+ln("🎁 Coffre commun",pf(O.k))+ln("🔷 Coffre rare",pf(O.r))+ln("💜 Coffre ultime (= épique 🟣)",pf(O.u)),"Un tour gratuit par jour."+(p?" Ton compte Premium double les pièces et rend les coffres rares et ultimes deux fois plus fréquents.":" Les comptes ⭐ Premium gagnent 30 pièces et ont deux fois plus de chances d’obtenir un coffre rare ou ultime."))};
 const fightOdds=()=>{const u=S.ult==null?1:S.ult,c=Math.min(100,((S.crit||5)+eqB("casque"))*em("crit")),t=eqB("torse");
  return sec("⚔️ En combat (à chaque réponse)",ln("💨 Esquiver une attaque (mauvaise réponse)",pf(DDG()))+ln("🌟 Attaque ultime (dégâts ×4)",pf(u))+ln("⭐ Coup critique (dégâts ×2)",pf((100-Math.min(100,u))/100*c))+(t>0?ln("💀 Coup fatal (combat normal)",pf(t)):""),"Ces chances comptent ton équipement.")};
 const capOdds=()=>{const cm=S.cap||25,k=em("cap");

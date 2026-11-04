@@ -4926,11 +4926,11 @@ const pfMap=()=>ST.dev?(ST.pf||{}):((ST.gc&&ST.gc.pf)||{}),pzN=()=>ST.dev?(ST.pz
 window.isPrem=()=>{const u=usr();const L=ST.dev?(ST.pu||[]):((ST.gc&&ST.gc.pu)||[]);return !!(u&&!u.isAnonymous&&L.includes(u.uid))};
 window.premLk=k=>!!pfMap()[k]&&!isPrem();
 window.premZ=n=>{const z=pzN();return z>0&&n>=z&&!isPrem()};
-window.premMsg=w=>dlg(`<b>${esc(String(w||"Cette fonction").replace(/^./,c=>c.toUpperCase()))}</b> est réservé${/^(La |Cette )/.test(w||"Cette")?"e":""} aux comptes <b>⭐ Premium</b>.<br><br>Demande à tes parents de passer ton compte en Premium.`,[["OK",null,"dyes"]],{i:"⭐",t:"Premium",html:1});
+window.premMsg=w=>dlg(`<b>${esc(String(w||"Cette fonction").replace(/^./,c=>c.toUpperCase()))}</b> est réservé${/^(La |Cette )/.test(w||"Cette")?"e":""} aux comptes <b>⭐ Premium</b>.<br><br>La version Premium est requise.`,[["OK",null,"dyes"]],{i:"⭐",t:"Premium",html:1});
 const prPub=()=>{save();try{gcPush().then(r=>{try{qToast(r==="ok"?"⭐ Premium publié.":"Publication impossible : "+r)}catch(e){}})}catch(e){}};
-window.prTog=k=>{ST.pf=Object.assign({},ST.pf||{});if(ST.pf[k])delete ST.pf[k];else ST.pf[k]=1;prPub();try{pRef()}catch(e){}};
-window.prZone=v=>{ST.pz=+v||0;prPub();try{pRef()}catch(e){}};
-window.admPrem=uid=>{ST.pu=(ST.pu||[]).slice();const i=ST.pu.indexOf(uid);if(i>=0)ST.pu.splice(i,1);else ST.pu.push(uid);prPub();admDraw()};
+window.prTog=k=>{if(!ST.dev)return;ST.pf=Object.assign({},ST.pf||{});if(ST.pf[k])delete ST.pf[k];else ST.pf[k]=1;prPub();try{pRef()}catch(e){}};
+window.prZone=v=>{if(!ST.dev)return;ST.pz=+v||0;prPub();try{pRef()}catch(e){}};
+window.admPrem=uid=>{if(!acIsDev()){tell("🔒 Réservé au modérateur.");return}ST.pu=(ST.pu||[]).slice();const i=ST.pu.indexOf(uid);if(i>=0)ST.pu.splice(i,1);else ST.pu.push(uid);prPub();admDraw()};
 window.prHtml=()=>`<small class="dvn">Coche les fonctions réservées aux comptes ⭐ Premium. Les autres comptes les voient verrouillées. Active le Premium d’un compte dans <b>👥 Gérer les comptes</b> (${(ST.pu||[]).length} compte${(ST.pu||[]).length>1?"s":""} Premium).</small><div class="dvg">${Object.keys(PRL).map(k=>`<button class="dvb ${pfMap()[k]?"off":""}" onclick="prTog('${k}')">${pfMap()[k]?"⭐":"🆓"} ${PRL[k]}</button>`).join("")}</div><div class="row"><span>🗺️ Zones Premium à partir de la zone</span><select class="sel" onchange="prZone(this.value)">${[0,...Array.from({length:30},(_,i)=>i+1)].map(n=>`<option value="${n}" ${pzN()==n?"selected":""}>${n?"zone "+n:"aucune"}</option>`).join("")}</select></div>`;
 const DEVH="b8a38211abb5098ebe20047e702ef24d3d1a0a6c5ca197d9ffd60d4b8937b002";
 window.acIsDev=()=>{const u=usr();return !!(u&&!u.isAnonymous&&AC.dv===u.uid)};

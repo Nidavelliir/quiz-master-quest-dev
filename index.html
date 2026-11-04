@@ -1918,7 +1918,8 @@ function priceSave(kind){
 
 /* ---------- mode développeur ---------- */
 const DXV=["Normale","Cachée","Grisée","Colorée"];
-function dxBtn(){return ST.dev?`<button class="btn" style="text-align:center;margin:0 0 8px" onclick="dxvNext()">👁️ Vue (dev) : <b>${DXV[ST.dxv||0]}</b> · changer</button>`:""}
+function dxBtn(){return ST.dev?`<button class="gpill" onclick="dxvNext()"><img src="dx_eye.webp" alt=""><span>Vue (dev) : ${DXV[ST.dxv||0]}</span><i>·</i><em>changer</em></button>`:""}
+{const st=document.createElement("style");st.textContent=`html body .gpill{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin:0 0 10px;padding:8px 14px;border-radius:999px;border:3px solid #e6b422;background:linear-gradient(180deg,#1d4fb8,#0b2a78 55%,#08205e);box-shadow:0 0 0 2px #7a4f00,0 0 14px rgba(80,150,255,.55),inset 0 2px 6px rgba(140,200,255,.5);cursor:pointer;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1rem,4.6vw,1.25rem);font-weight:700;color:#fff1c2;text-shadow:0 2px 3px #000}.gpill img{height:1.6em;width:auto;border-radius:6px}.gpill i{font-style:normal;opacity:.8}.gpill em{font-style:normal;color:#9fd0ff}.gpill:active{transform:scale(.97)}[data-k="dex"] .wb .bar{height:12px;border-radius:999px;border:2px solid #6c5cff;background:#0a1240;box-shadow:0 0 10px rgba(110,100,255,.6)}`;document.head.appendChild(st)}
 function dxvNext(){ST.dxv=((ST.dxv||0)+1)%4;save();winRender()}
 function devKeepOff(){try{localStorage.removeItem("qmd_dev")}catch(e){}tell("Cet appareil ne démarrera plus en mode développeur.");home()}
 function plTog(k){ST.pl=Object.assign({},ST.pl||{});ST.pl[k]=!ST.pl[k];save();fbCfgPush();home();pRef()}

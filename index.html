@@ -4652,7 +4652,7 @@ function tabbar(){let t=document.getElementById("tabbar");
  t.style.display=on?"grid":"none";
  const cur=WIN=="zone"?1:WIN=="dex"?2:WIN=="shop"?3:WIN=="menu"?4:(WIN?-1:0);
  const it=[["Accueil","closeWin()"],["Carte","openWin('zone')"],["Dex","openWin('dex')"],["Boutique","openWin('shop')"],[(window.ffOn&&ffOn("menu2"))?"Menu":"Sac","openWin('menu')"]];
- t.innerHTML=it.map((x,i)=>`<button class="${i==cur?"on":""}" onclick="${x[1]}"><img src="s_t${i+1}.webp" alt=""><span>${x[0]}</span></button>`).join("");dvQL()}
+ t.innerHTML=it.map((x,i)=>`<button class="${i==cur?"on":""}" onclick="${x[1]}"><img src="s_t${i+1}.webp" alt=""><span>${x[0]}</span></button>`).join("");dvQL();try{hmtEnsure()}catch(e){}}
 
 function skinMore2(){document.querySelectorAll(".ov .lkw:not(.mz)").forEach(w=>{w.classList.add("mz");w.insertAdjacentHTML("afterbegin",'<div class="lkm"></div>')});
  app.querySelectorAll(":scope>.card.c:not(.recd)").forEach(c=>{if(c.textContent.includes("Nouveau record")||c.textContent.includes("Fin de la survie")){c.classList.add("recd");c.insertAdjacentHTML("afterbegin",c.textContent.includes("Nouveau record")?'<div class="rch"></div>':"")}});
@@ -4679,6 +4679,8 @@ function dvQL(){document.querySelectorAll("#app .dql,main .dql,#tabbar .dql").fo
  const sb=[...app.querySelectorAll(".scn .sb")];[["Ville","city"],["Roue","wheel"]].forEach(([t,k])=>add(sb.find(b=>b.textContent.includes(t)),"p",k,!!(ST.pl||{})[k]));
  add(app.querySelector(".scn .eqlg:not(.dvlg)"),"p","equip",!!(ST.pl||{}).equip);
  const tb=document.querySelectorAll("#tabbar button");["","zone","dex","shop","menu"].forEach((k,i)=>{if(k)add(tb[i],"p",k,!!(ST.pl||{})[k])})}
+window.hmtEnsure=function(){const on=!!(window.ffOn&&ffOn("homeb")),ex=app.querySelector(".hmt");if(!on){if(ex)ex.remove();return}if(ex||!document.getElementById("hcard"))return;const w2=app.querySelector(".btr2");if(!w2)return;let inv=false;try{const r=cpRoom();inv=!!(r&&r.st==="lobby"&&!(window.COOP&&COOP.on))}catch(e){}
+ w2.insertAdjacentHTML("afterend",`<div class="hmt"><button class="mt mtI" style="--bgi:url(mt_coop.webp)" onclick="openWin('coop')"><b>Boss à deux</b><small>${inv?"invitation !":"jouer en équipe"}</small></button><button class="mt mtI" style="--bgi:url(mt_sell.webp)" onclick="openWin('sell')"><b>Vendeur</b><small>vendre mes objets</small></button></div>`)};
 function skinHome(){skinMore();const hc=document.getElementById("hcard");if(!hc||!app.contains(hc)||hc.classList.contains("hs2")){tabbar();return}
  hc.classList.add("hs2");const dv=dvOn(),nm=dv?"Grand créateur":(S.pn||"Joueur"),lvl=LV[S.lv],n=S.dex.length;
  const sc=document.createElement("div");sc.className="scn";
@@ -4687,7 +4689,7 @@ function skinHome(){skinMore();const hc=document.getElementById("hcard");if(!hc|
  const mg=app.querySelector(".mgrid");if(mg){let x=mg;const rm=[];while(x){rm.push(x);x=x.nextElementSibling}rm.forEach(e=>e.remove())}
  app.querySelectorAll(".btn.big").forEach(b=>{const o=b.getAttribute("onclick")||"";const c=o.startsWith("start(")?"go":o.includes("'boss'")?"bossb":o.includes("'surv'")?"survb":o.includes("'rev'")?"revb":"";if(c){b.classList.add(c);b.removeAttribute("style")}});
  const bb=app.querySelector(".bossb"),sv=app.querySelector(".survb");if(bb&&sv&&bb.nextElementSibling){const w=document.createElement("div");w.className="btr2";const rv=bb.nextElementSibling;bb.before(w);w.append(bb,sv)}
- try{if(window.ffOn&&ffOn("homeb")&&!app.querySelector(".hmt")){const w2=app.querySelector(".btr2");const inv=cpRoom&&cpRoom()&&cpRoom().st==="lobby"&&!COOP.on;if(w2)w2.insertAdjacentHTML("afterend",`<div class="hmt"><button class="mt mtI" style="--bgi:url(mt_coop.webp)" onclick="openWin('coop')"><b>Boss à deux</b><small>${inv?"invitation !":"jouer en équipe"}</small></button><button class="mt mtI" style="--bgi:url(mt_sell.webp)" onclick="openWin('sell')"><b>Vendeur</b><small>vendre mes objets</small></button></div>`)}}catch(e){}
+ try{hmtEnsure()}catch(e){}
  app.querySelectorAll(":scope>.card").forEach(c=>{if(c.id!="hcard"){c.classList.add("parch");const k=c.querySelector(".cats");if(c.textContent.includes("Matières")&&k){k.classList.add("subs");k.querySelectorAll("button").forEach(b=>{const t=b.textContent.trim().replace(/^🔒\s*/,""),i=IC[t];b.dataset.s=t;if(i)b.innerHTML=`<img src="s_mi_${i}.webp" alt=""><span>${t}</span>`+(b.classList.contains("lks")?'<i class="lkb">🔒</i>':"")})}}});
  try{const ec=evCard();document.querySelectorAll(".evc").forEach(e=>e.remove());if(ec)hc.insertAdjacentHTML("afterend",ec);const qc=qCard();if(qc&&!app.querySelector(".qcd")){const e0=app.querySelector(".evc");(e0||hc).insertAdjacentHTML("afterend",qc);}if(false)if(qc&&!app.querySelector(".qcd"))hc.insertAdjacentHTML("afterend",qc);cpInvRefresh()}catch(e){}
  tabbar();dvQL()}

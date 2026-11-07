@@ -4935,8 +4935,9 @@ setTimeout(async()=>{if(!ST.dev)return;try{const L=await dvMsgList(),s=dvmSeen()
 /* Sac → Menu dans les textes */
 (function(){const on=()=>{try{return !!(window.ffOn&&ffOn("menu2"))}catch(e){return false}};
  const RX=/(?<![\wÀ-ÿ])(?:[Mm]enu )?Sac(?![\wÀ-ÿ])/g,fx=t=>t.replace(RX,"Menu");
- function walk(n){if(!n)return;if(n.nodeType==3){const v=n.nodeValue;if(v&&v.indexOf("Sac")>=0){const w=fx(v);if(w!==v)n.nodeValue=w}return}if(n.nodeType!=1||/^(SCRIPT|STYLE|TEXTAREA|INPUT)$/.test(n.tagName))return;for(let c=n.firstChild;c;c=c.nextSibling)walk(c)}
- new MutationObserver(ms=>{if(!on())return;for(const m of ms){if(m.type=="characterData")walk(m.target);else m.addedNodes.forEach(walk)}}).observe(document.body,{childList:true,subtree:true,characterData:true});setTimeout(()=>{if(on())walk(document.body)},0)})();
+ function walk(n){if(!n)return;if(n.nodeType==3){const v=n.nodeValue;if(v&&v.indexOf("Sac")>=0){const w=fx(v);if(w!==v)n.nodeValue=w}return}if(n.nodeType!=1||/^(SCRIPT|STYLE|TEXTAREA|INPUT)$/.test(n.tagName))return;if(n.matches&&n.matches('.dvp,#nw,.win[data-k="news"],.nosac'))return;for(let c=n.firstChild;c;c=c.nextSibling)walk(c)}
+ const skip=n=>{try{const e=n.nodeType==1?n:n.parentElement;return !!(e&&e.closest&&e.closest('.dvp,#nw,.win[data-k="news"],.nosac'))}catch(e){return false}};
+ new MutationObserver(ms=>{if(!on())return;for(const m of ms){if(skip(m.target))continue;if(m.type=="characterData")walk(m.target);else m.addedNodes.forEach(x=>{if(!skip(x))walk(x)})}}).observe(document.body,{childList:true,subtree:true,characterData:true});setTimeout(()=>{if(on())walk(document.body)},0)})();
 
 const ffMap=()=>ST.dev?(ST.ff||{}):((ST.gc&&ST.gc.ff)||{});
 window.ffOn=k=>(ST.dev&&!window.PVW)?true:!!ffMap()[k];

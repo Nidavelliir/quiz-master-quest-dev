@@ -853,13 +853,19 @@ function mq(l){if(l>=2)return mqO(l-2);const r=n=>Math.floor(Math.random()*n),t=
  else{if(t==0){x=20+r(60);y=5+r(Math.min(25,95-x));q=x+" + "+y;a=x+y}else if(t==1){x=30+r(70);y=5+r(25);q=x+" − "+y;a=x-y}else{x=2+r(9);y=[2,5,10][r(3)];q=x+" × "+y;a=x*y}}
  const ds=new Set();while(ds.size<3){const d=a+[-10,-3,-2,-1,1,2,3,10][r(8)];if(d!==a&&d>=0)ds.add(d)}
  const o=sh([a,...ds]);return ["Maths","Combien font "+q+" ?",o.map(String),o.indexOf(a)]}
-function mqO(l){const r=n=>Math.floor(Math.random()*n),t=r(3);let q,a,x,y;
+function mqO(l){if(l>=3)return mqX(Math.min(5,l+1));const r=n=>Math.floor(Math.random()*n),t=r(3);let q,a,x,y;
  if(l==0){if(t==0){x=20+r(60);y=10+r(30);q=x+" + "+y;a=x+y}else if(t==1){x=50+r(50);y=10+r(40);q=x+" − "+y;a=x-y}else{x=2+r(4);y=2+r(9);q=x+" × "+y;a=x*y}}
  else if(l==1){if(t==0){x=10*(10+r(80));y=10*(5+r(15));q=x+" + "+y;a=x+y}else if(t==1){x=3+r(7);y=3+r(7);q=x+" × "+y;a=x*y}else{x=10*(30+r(60));y=10*(10+r(15));q=x+" − "+y;a=x-y}}
  else if(l==2){if(t==0){x=[12,13,14,15,16,18,20,21,24,25,30,40,50][r(13)];y=3+r(7);q=x+" × "+y;a=x*y}else if(t==1){y=3+r(7);a=4+r(Math.min(16,Math.floor(100/y)-3));x=y*a;q=x+" ÷ "+y}else{x=10*(10+r(40));y=10*(10+r(40));q=x+" + "+y;a=x+y}}
  else{if(t==0){const p=[10,25,50][r(3)],n=[40,80,120,200][r(4)];q=p+" % de "+n;a=p*n/100}else if(t==1){x=[12,15,20,25,30][r(5)];y=[11,12,15,20][r(4)];q=x+" × "+y;a=x*y}else{a=3+r(15);q="2 × ? + 5 = "+(2*a+5)}}
  const ds=new Set();while(ds.size<3){const d=a+[-10,-2,-1,1,2,10][r(6)];if(d!==a&&d>=0)ds.add(d)}
  const o=sh([a,...ds]);return ["Maths",(t==2&&l==3)?"Trouve ? : "+q:"Combien font "+q+" ?",o.map(String),o.indexOf(a)]}
+/* calcul : niveaux Max (mqX(4)) et Expert (mqX(5)) */
+function mqX(l){const r=n=>Math.floor(Math.random()*n),f=v=>String(Math.round(v*100)/100).replace(".",","),t=r(4);let q,a,pre="Combien font ";
+ if(l==4){if(t==0){const x=13+r(37),y=11+r(19);q=x+" × "+y;a=x*y}else if(t==1){const y=3+r(7);a=20+r(130);q=(a*y)+" ÷ "+y}else if(t==2){const x=(10+r(90))/10,y=(10+r(90))/10;q=f(x)+" + "+f(y);a=x+y}else{const b=2+r(9),c=2+r(9),d=5+r(40);q=d+" + "+b+" × "+c;a=d+b*c}}
+ else{if(t==0){const x=11+r(15);q=x+"²";a=x*x}else if(t==1){const x=-(2+r(18)),y=2+r(25),k=r(2);q=k?"("+x+") × "+(2+r(8)):"("+x+") + "+y;a=k?x*Number(q.split(" × ")[1]):x+y}else if(t==2){const c=2+r(8),x=2+r(15),b=1+r(20);q=c+"x − "+b+" = "+(c*x-b);a=x;pre="Trouve x : "}else{const p=[5,15,20,35,75][r(5)],n=[40,60,120,240,360][r(5)];q=p+" % de "+n;a=p*n/100}}
+ const ds=new Set();let g=0;while(ds.size<3&&g++<60){const d=Math.round((a+[-10,-5,-2,-1,1,2,5,10,a>50?a/10:3][r(9)])*100)/100;if(d!==a)ds.add(d)}
+ const o=sh([a,...ds]);return ["Maths",pre+q+(pre=="Combien font "?" ?":""),o.map(f),o.indexOf(a)]}
 function tg(s){const e=subsEff();if(e.includes(s)){if(e.length>1){S.subs=e.filter(x=>x!==s)}}else{S.subs=[...new Set([...e,s])]}save();home()}
 
 
@@ -1119,9 +1125,9 @@ function expo(){const b=new Blob([JSON.stringify(ST)],{type:"application/json"})
 function impo(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.ps||!d.ps.length)throw 0;if(!confirm("Remplacer toutes les données actuelles par cette sauvegarde ("+d.ps.length+" profil(s)) ?"))return;mig(d);d.ps.forEach(norm);ST=d;S=ST.ps[ST.cur]||ST.ps[0];save();home();if(PAU)parentOpen()}catch(e){tell("Fichier de sauvegarde invalide.")}};r.readAsText(f)}
 function adapt(q){const s=q[0];let lv=G.lv;G.ql=lv;G.seen=G.seen||{};if(window.qxMerge)qxMerge();
  if(G.rev){G.seen[q[1]]=1;return q}
- let up=0;if(window.ffOn&&ffOn("diff5")){up=Math.floor((G.streak||0)/5);if(up>(G.upS||0)&&G.lv+up<=5){setTimeout(()=>{try{qToast("⬆️ 5 bonnes réponses d’affilée ! Questions de niveau "+LV[G.lv+up])}catch(e){}},300)}G.upS=up;lv=Math.min(5,G.lv+up)}
+ let up=0;if(window.ffOn&&ffOn("diff5")){up=Math.floor((G.streak||0)/5);if(up>(G.upS||0)&&G.lv+up<=LV.length-1){setTimeout(()=>{try{qToast("⬆️ 5 bonnes réponses d’affilée ! Questions de niveau "+LV[G.lv+up])}catch(e){}},300)}G.upS=up;lv=Math.min(LV.length-1,G.lv+up)}
  const r=S.rc[s]||[];
- if(!up&&r.length>=10){const p=r.reduce((a,b)=>a+b,0)/r.length;if(p>=.85&&lv<5&&Math.random()<.35)lv++;else if(p<=.4&&lv>0&&Math.random()<.35)lv--}
+ if(!up&&r.length>=10){const p=r.reduce((a,b)=>a+b,0)/r.length;if(p>=.85&&lv<LV.length-1&&Math.random()<.35)lv++;else if(p<=.4&&lv>0&&Math.random()<.35)lv--}
  G.ql=lv;
  if(q.length==1){let m=mq(lv);for(let k=0;k<15&&G.seen[m[1]];k++)m=mq(lv);G.seen[m[1]]=1;return m}
  if(lv==G.lv&&!G.seen[q[1]]){G.seen[q[1]]=1;return q}
@@ -1164,12 +1170,12 @@ function zoneWin(){qEv("zone");const z=G.zone,lv=G.lv,hi=17+z,had=hOK(hi),first=
  <div class="card c ${had?"":"glow"}"><b>🔓 Déverrouillé</b>${had?`<p style="color:var(--mut)">Le héros de cette zone est déjà à toi.</p>`:`<div class="pop" style="font-size:4.5rem;line-height:1.2">${HERO[hi]}</div><p><b>Nouveau héros débloqué !</b><br><small style="color:var(--mut)">Choisis-le dans « ✏️ Modifier mon héros ».</small></p>`}${first&&z<ZN.length?`<p>➡️ Zone suivante ouverte : ${ZN[z].e} <b>${ZN[z].n}</b></p>`:""}${z==ZN.length?`<p>👑 Tu as conquis le Trône du Savoir : l’aventure ${LV[lv]} est terminée, bravo champion !</p>`:""}</div>
  ${z<ZN.length?`<button class="btn big" onclick="startZone(${z+1})">➡️ Zone suivante</button>`:""}<button class="btn" style="text-align:center" onclick="home()">Accueil</button>`+recap();fireworks();party();setTimeout(fireworks,900)}
 function survive(){G={surv:true,lives:3,n:0,php:100,streak:0,best:0,lv:S.lv,ss:{},errs:[],nb:[],ok:0,ko:0,gain:0,boss:false};sq()}
-function sq(){if(window.qxMerge)qxMerge();const s10=!!(window.ffOn&&ffOn("surv10"));const lv=s10?Math.min(5,S.lv+(G.up||0)):Math.min(5,S.lv+Math.floor(G.n/15));G.lv=lv;G.seen=G.seen||{};const sl=lsu(lv),s=sl[Math.floor(Math.random()*sl.length)];let q;if(s=="Maths"){q=mq(lv);for(let k=0;k<15&&G.seen[q[1]];k++)q=mq(lv)}else{let c=L[lv].filter(x=>x[0]==s&&!G.seen[x[1]]);if(!c.length)c=L[lv].filter(x=>x[0]==s);q=c[Math.floor(Math.random()*c.length)]}G.seen[q[1]]=1;
+function sq(){if(window.qxMerge)qxMerge();const s10=!!(window.ffOn&&ffOn("surv10"));const lv=s10?Math.min(survTop(),S.lv+(G.up||0)):Math.min(LV.length-1,S.lv+Math.floor(G.n/15));G.lv=lv;G.seen=G.seen||{};const sl=lsu(lv),s=sl[Math.floor(Math.random()*sl.length)];let q;if(s=="Maths"){q=mq(lv);for(let k=0;k<15&&G.seen[q[1]];k++)q=mq(lv)}else{let c=L[lv].filter(x=>x[0]==s&&!G.seen[x[1]]);if(!c.length)c=L[lv].filter(x=>x[0]==s);q=c[Math.floor(Math.random()*c.length)]}G.seen[q[1]]=1;
  G.q=q;G.cur=sh(q[2].map((t,k)=>[t,k==q[3]]));
  app.innerHTML=`<div class="fgt"><div class="card fa"><div class="arena" style="background:${BG[S.bg||0]}"><div id="h"><div class="fg">${hero()}</div><div class="hp"><b>${esc(S.name||S.pn||"Toi")}</b><div class="hpb"><i style="width:${G.lives/3*100}%;background:${hpg(G.lives/3*100)}"></i><span>${"❤️".repeat(G.lives)}${"🖤".repeat(3-G.lives)}</span></div></div></div><div id="m"><div class="fg" style="font-size:4.2rem;line-height:1">🏃</div><div class="hp"><b>Score : ${G.n}</b><div class="hpb mon"><i style="width:${Math.min(100,G.n/Math.max(10,S.surv||0)*100)}%"></i><span>🏆 Record ${Math.max(S.surv||0,G.n)}</span></div></div></div></div></div>
- <div class="card fq"><div class="fm"><small>${q[0]} · ${LV[lv]}</small><span>🪙 ${S.coins||0}</span></div><b class="fqt">${q[1]}</b><div class="fo">${G.cur.map((o,k)=>`<button class="btn opt" onclick="spick(${k})">${o[0]}</button>`).join("")}</div></div></div>`}
+ <div class="card fq"><div class="fm"><small>${q[0]} · ${lvN(lv)}</small><span>🪙 ${S.coins||0}</span></div><b class="fqt">${q[1]}</b><div class="fo">${G.cur.map((o,k)=>`<button class="btn opt" onclick="spick(${k})">${o[0]}</button>`).join("")}</div></div></div>`}
 function spick(k){const good=G.cur[k][1];rec(good,k);const bs=[...document.querySelectorAll(".opt")];bs.forEach((b,j)=>{b.disabled=true;if(G.cur[j][1])b.classList.add("ok")});
- if(good){G.n++;G.sk=(G.sk||0)+1;if(window.ffOn&&ffOn("surv10")&&G.sk%10==0&&S.lv+(G.up||0)<5){G.up=(G.up||0)+1;setTimeout(()=>{try{qToast("⬆️ 10 bonnes réponses d’affilée ! Questions de niveau "+LV[Math.min(5,S.lv+G.up)])}catch(e){}},300)}snd("hit");vib(40);if(G.n%5==0)gc(1)}else{G.sk=0;bs[k].classList.add("ko");if(Math.random()*100<DDG()){try{qToast("💨 Esquive ! Tu évites l’attaque !")}catch(e){}}else G.lives--;snd("ko");vib([80,40,80])}
+ if(good){G.n++;G.sk=(G.sk||0)+1;if(window.ffOn&&ffOn("surv10")&&G.sk%10==0&&S.lv+(G.up||0)<survTop()){G.up=(G.up||0)+1;setTimeout(()=>{try{qToast("⬆️ 10 bonnes réponses d’affilée ! Questions de niveau "+lvN(Math.min(survTop(),S.lv+G.up)))}catch(e){}},300)}snd("hit");vib(40);if(G.n%5==0)gc(1)}else{G.sk=0;bs[k].classList.add("ko");if(Math.random()*100<DDG()){try{qToast("💨 Esquive ! Tu évites l’attaque !")}catch(e){}}else G.lives--;snd("ko");vib([80,40,80])}
  save();setTimeout(()=>G.lives<=0?send():sq(),900)}
 function send(){dailyB();const nr=G.n>(S.surv||0);if(nr){S.surv=G.n;qEv("surv");snd("win");party()}else snd("lose");if(G.n>=10)bd("surv");save();
  app.innerHTML=`<div class="card c ${nr?"glow":""}"><div class="pop" style="font-size:4rem">${nr?"🏆":"💀"}</div><h2>${nr?"Nouveau record !":"Fin de la survie"}</h2><div class="gain">${G.n} bonnes réponses</div><p>Record : ${S.surv||0}</p>${bdTxt()}</div><button class="btn big" onclick="survive()">🔁 Rejouer</button><button class="btn" style="text-align:center" onclick="home()">Accueil</button>`+recap()}
@@ -4878,6 +4884,7 @@ window.obNext=()=>{if(!document.getElementById("obg")){obShow();}
    Pour chaque nouveauté : l'ajouter ici, et l'entourer de ffOn("cle") dans le jeu.
    Quand le développeur l'ouvre, sa fiche « news » apparaît automatiquement dans les Nouveautés des joueurs. */
 window.FFL=[ /* exemple : {k:"boutique",n:"Boutique en argent réel",news:{t:"La boutique",l:[["🛒","Texte de la nouveauté"]]}} */
+ {k:"lvmax",n:"Niveau Max (après la 6e, 1 200 questions) et niveau Expert en mode survie (900 questions)",news:{t:"Nouveau niveau : Max 🏆",l:[["🏆","Un nouveau niveau, <b>Max</b>, arrive après la 6e : 300 questions de plus en Anglais, Français, Géométrie et Histoire, et un calcul mental plus corsé."],["🔥","En <b>mode survie</b>, après la 6e et le niveau Max, la difficulté continue de monter jusqu’au niveau <b>Expert</b> : 900 questions réservées aux meilleurs !"]]}},
  {k:"surv10",n:"Mode survie : +1 niveau toutes les 10 bonnes réponses d’affilée",news:{t:"Le mode survie se corse 🏃",l:[["⬆️","En <b>mode survie</b>, chaque série de <b>10 bonnes réponses d’affilée</b> fait monter les questions d’un niveau, jusqu’à la 6e."],["🔁","Une même question ne revient plus deux fois dans la même partie."]]}},
  {k:"qplus",n:"Trois fois plus de questions (Anglais, Français, Géométrie, Histoire)",news:{t:"Trois fois plus de questions 📚",l:[["📚","Il y a maintenant <b>trois fois plus de questions</b> en Anglais, Français, Géométrie et Histoire, pour chaque niveau, en suivant le programme de l’école."],["🔁","Les questions se répètent beaucoup moins, et une même question ne revient plus deux fois dans le même combat."]]}},
  {k:"diff5",n:"Difficulté qui monte : +1 niveau toutes les 5 bonnes réponses d’affilée",news:{t:"Questions plus difficiles quand tu enchaînes ⬆️",l:[["⬆️","Après <b>5 bonnes réponses d’affilée</b>, les questions passent au <b>niveau au-dessus</b>. Encore 5, et ça monte encore !"],["↩️","Une erreur et tu reviens à ton niveau habituel."]]}},
@@ -4898,7 +4905,16 @@ window.FFL=[ /* exemple : {k:"boutique",n:"Boutique en argent réel",news:{t:"La
 
 /* ---------- 📚 questions supplémentaires (fonctionnalité « qplus », fichier qx.json) ---------- */
 let QX=null,QXM=0;window.qxMerge=()=>{if(QXM||!QX||!(window.ffOn&&ffOn("qplus")))return;for(let i=0;i<6;i++)if(QX[i]&&L[i])L[i]=L[i].concat(QX[i]);QXM=1};
-fetch("qx.json").then(r=>r.json()).then(j=>{QX=j;qxMerge()}).catch(()=>{});setInterval(()=>{try{qxMerge()}catch(e){}},5000);
+fetch("qx.json").then(r=>r.json()).then(j=>{QX=j;qxMerge();try{lvmaxApply()}catch(e){}}).catch(()=>{});setInterval(()=>{try{qxMerge()}catch(e){}},5000);
+/* ---------- 🏆 niveau Max (après la 6e) et niveau Expert du mode survie (fonctionnalité « lvmax ») ---------- */
+window.lvmaxOn=()=>!!(window.ffOn&&ffOn("lvmax"));
+window.lvN=i=>LV[i]||(i>=7?"Expert":"Max");
+window.survTop=()=>lvmaxOn()?7:LV.length-1;
+window.lvmaxApply=()=>{if(!lvmaxOn())return;if(LV.length<7){LV.push("Max");try{if(document.getElementById("hcard"))home()}catch(e){}}if(QX&&!window.__LVM){if(QX[6])L[6]=QX[6].slice();if(QX[7])L[7]=QX[7].slice();window.__LVM=1}};
+setInterval(()=>{try{lvmaxApply()}catch(e){}},3000);
+{const s0=start;start=function(b,a){try{lvmaxApply()}catch(e){}if(S.lv>=LV.length)S.lv=LV.length-1;if(!L[S.lv]){tell("⏳ Chargement des questions… réessaie dans quelques secondes.");return}return s0(b,a)}}
+{const v0=survive;survive=function(){try{lvmaxApply()}catch(e){}if(S.lv>=LV.length)S.lv=LV.length-1;if(lvmaxOn()&&!L[7]){tell("⏳ Chargement des questions… réessaie dans quelques secondes.");return}return v0()}}
+
 
 /* ---------- ✉️ Écrire au créateur (fonctionnalité « contact ») + Sac → Menu (« menu2 ») + raccourcis accueil (« homeb ») ---------- */
 {const st=document.createElement("style");st.textContent=`.hmt{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin:4px 0 8px}html body main .hmt .mt.mtI{width:100%;min-width:0;margin:0;box-sizing:border-box;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;background:var(--bgi) center/100% 100% no-repeat!important;border:0!important;box-shadow:none!important;aspect-ratio:436/220;padding:0 6% 8%!important;cursor:pointer;color:#fff}html body main .hmt .mt.mtI b{font-family:Georgia,"Times New Roman",serif;font-weight:900;font-size:clamp(.9rem,4.2vw,1.2rem);line-height:1.05;color:#ffe9a8;text-shadow:0 2px 0 #4a2600,0 0 6px rgba(0,0,0,.8)}html body main .hmt .mt.mtI small{color:#fff!important;font-weight:700;font-size:clamp(.66rem,3vw,.85rem);text-shadow:0 1px 3px #000}.hmt .mt:active{transform:scale(.97)}

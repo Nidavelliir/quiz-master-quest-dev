@@ -578,6 +578,18 @@ MD[165]={name:'Magmatitan',leg:true,myth:true,fam:[165],svg:`<img class="mo" alt
 REN['Zigzagon']='Floralis';REN['Ignitor']='Ténébrax';
 for(let i=63;i<150;i++)if(_on[i]!==MD[i].name)REN[_on[i]]=MD[i].name;
 const MON=MD.map(m=>[m.svg,m.name]);
+/* ---------- Nouveaux Velkis : 8 premières familles (fonctionnalité « velk1 ») — les noms enregistrés restent les mêmes, seul l'affichage change ---------- */
+(function(){const NN=["Faonlune","Cervéclat","Astracerf","Galetin","Roctalite","Colossaphir","Lunichat","Renarcane","Séléninox","Bullastre","Nébuline","Cosmorque","Étincelou","Foudraloup","Orageonyx","Ombrichou","Lanterloup","Spectrefaux","Auréolin","Séralou","Célestiel","Bourgeonnet","Florevent","Sylvécorce"];
+ const on=()=>{try{return !!(window.ffOn&&ffOn("velk1"))}catch(e){return false}};window.vk1On=on;
+ const OLD=MD.slice(0,24).map(m=>m.name),SV=MD.slice(0,24).map(m=>m.svg),MP={};OLD.forEach((n,i)=>MP[n]=NN[i]);
+ for(let i=0;i<24;i++){Object.defineProperty(MD[i],"svg",{get:()=>on()?`<img class="mo" alt="${NN[i]}" src="vm${String(i).padStart(2,"0")}.webp" style="object-fit:contain;filter:drop-shadow(0 4px 5px rgba(0,0,0,.3))">`:SV[i],set:v=>{SV[i]=v},configurable:true,enumerable:true});
+  Object.defineProperty(MON[i],0,{get:()=>MD[i].svg,configurable:true})}
+ const RX=new RegExp("(?<![\\wÀ-ÿ])("+[...OLD].sort((a,b)=>b.length-a.length).join("|")+")(?![\\wÀ-ÿ])","g"),fx=t=>t.replace(RX,w=>MP[w]||w);
+ function walk(n){if(!n)return;if(n.nodeType==3){const v=n.nodeValue;if(v&&v.length>3){const w=fx(v);if(w!==v)n.nodeValue=w}return}if(n.nodeType!=1||/^(SCRIPT|STYLE|TEXTAREA|INPUT)$/.test(n.tagName))return;
+  for(const a of ["alt","title","aria-label"]){const v=n.getAttribute(a);if(v){const w=fx(v);if(w!==v)n.setAttribute(a,w)}}for(let c=n.firstChild;c;c=c.nextSibling)walk(c)}
+ window.vk1Name=n=>on()&&MP[n]||n;
+ const go=()=>{try{new MutationObserver(ms=>{if(!on())return;for(const m of ms){if(m.type=="characterData")walk(m.target);else m.addedNodes.forEach(walk)}}).observe(document.body,{childList:true,subtree:true,characterData:true});if(on())walk(document.body)}catch(e){}};
+ if(document.body)go();else addEventListener("DOMContentLoaded",go)})();
 function detail(i){const m=MD[i],c=S.dex.includes(m.name);
  const ch=m.leg?"":`<div class="ch" style="display:flex;justify-content:center;gap:8px;margin:8px 0">${m.fam.map(j=>`<div class="${S.dex.includes(MD[j].name)?"":"lock"}" style="text-align:center;font-size:.75rem">${dxi(MD[j])}${S.dex.includes(MD[j].name)?MD[j].name:"???"}</div>`).join("")}</div>`;
  const d=document.createElement("div");d.className="ov";d.onclick=()=>d.remove();
@@ -4834,6 +4846,7 @@ window.obNext=()=>{if(!document.getElementById("obg")){obShow();}
    Pour chaque nouveauté : l'ajouter ici, et l'entourer de ffOn("cle") dans le jeu.
    Quand le développeur l'ouvre, sa fiche « news » apparaît automatiquement dans les Nouveautés des joueurs. */
 window.FFL=[ /* exemple : {k:"boutique",n:"Boutique en argent réel",news:{t:"La boutique",l:[["🛒","Texte de la nouveauté"]]}} */
+ {k:"velk1",n:"Nouveaux Velkis : les 8 premières familles (24 visuels)",news:{t:"De nouveaux Velkis ✨",l:[["<img src=\"vm00.webp\" alt=\"\" style=\"height:1.8em\">","Les <b>8 premières familles</b> de Velkis changent de visage : cerf astral, golem de cristal, renard lunaire, baleine des étoiles, loup de foudre, faucheur d’ombre, ange doré et esprit des fleurs."],["🎒","Si tu les avais déjà capturés, tu les gardes : seuls leur image et leur nom changent."]]}},
  {k:"onb",n:"Première installation : connexion Google obligatoire, puis code parent, puis prénom",news:{t:"Un démarrage plus sûr 🔐",l:[["☁️","À la première installation, un parent connecte son <b>compte Google</b> : la progression est sauvegardée en ligne dès le début."],["🔑","Ensuite, le parent choisit son <b>code parent</b>, puis l’enfant écrit son <b>prénom</b>."]]}},
  {k:"cadres",n:"Nouveaux cadres (18 cadres)",news:{t:"18 nouveaux cadres 🖼️",l:[["<img src=\"s_fr_c06.webp\" alt=\"\" style=\"height:1.8em\">","Tous les cadres du héros sont remplacés par <b>18 nouveaux cadres</b> : lune, océan, forêt, orage, galaxie, dragon, rouages… Ils sont dans la boutique."],["🎒","Si tu avais déjà acheté un cadre, tu gardes son remplaçant : tu ne perds rien."]]}},
  {k:"tuto",n:"Tutoriel des nouveaux joueurs",news:{t:"Un tutoriel pour bien débuter 🎓",l:[["🎓","Les nouveaux joueurs découvrent maintenant le jeu pas à pas : combats, capture, carte, boutique, sac…"],["👀","Chaque écran du jeu est montré et expliqué, sauf ceux que tes parents ont verrouillés."]]}},

@@ -5011,6 +5011,7 @@ setInterval(()=>{try{lvmaxApply()}catch(e){}},3000);
 {const s0=start;start=function(b,a){try{lvmaxApply()}catch(e){}if(S.lv>=LV.length)S.lv=LV.length-1;if(!L[S.lv]){tell("⏳ Chargement des questions… réessaie dans quelques secondes.");return}return s0(b,a)}}
 {const v0=survive;survive=function(){try{lvmaxApply()}catch(e){}if(S.lv>=LV.length)S.lv=LV.length-1;if(lvmaxOn()&&!L[7]){tell("⏳ Chargement des questions… réessaie dans quelques secondes.");return}return v0()}}
 
+{const st=document.createElement("style");st.textContent=`html body #app .card .cats:has(> button[data-l="9"]){display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:8px!important;justify-items:stretch}html body #app .card .cats:has(> button[data-l="9"]) > button{width:100%!important;min-width:0!important;margin:0!important;padding:8px 2px!important;font-size:1rem!important}`;document.head.appendChild(st)}
 /* ---------- 🎓 niveaux 5e, 4e, 3e + niveau Max (6e→3e, dégâts +50 %) (fonction « lv3e ») et questions doublées (fonction « qx2 ») ---------- */
 window.lv3eOn=()=>!!(window.ffOn&&ffOn("lv3e"));
 window.qx2On=()=>!!(window.ffOn&&ffOn("qx2"));

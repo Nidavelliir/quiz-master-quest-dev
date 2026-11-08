@@ -4722,6 +4722,71 @@ function skinHome(){skinMore();const hc=document.getElementById("hcard");if(!hc|
 new MutationObserver(()=>{skinMore();skinHome()}).observe(app,{childList:true});new MutationObserver(()=>skinMore2()).observe(document.body,{childList:true});
 skinHome();
 })();
+/* ---------- 🎨 nouveau style de l'accueil (fonction « skin2 ») : cadres parchemin dorés, boutons brillants, barre en bois ---------- */
+(()=>{const leaf=(x,y,r,s,c)=>`<g transform="translate(${x} ${y}) rotate(${r}) scale(${s})"><path d="M0 0 C6 -9 20 -10 30 0 C20 10 6 9 0 0Z" fill="${c}" stroke="#2f5d12" stroke-width="1.2"/><path d="M2 0 L26 0" stroke="#d9f59a" stroke-width="1" opacity=".7"/></g>`;
+ const vine=`<svg xmlns="http://www.w3.org/2000/svg" width="150" height="60" viewBox="0 0 150 60"><path d="M4 50 C20 20 50 10 80 14 S130 22 146 12" fill="none" stroke="#7a5a1c" stroke-width="3.2" stroke-linecap="round"/><path d="M4 50 C20 20 50 10 80 14 S130 22 146 12" fill="none" stroke="#b9913e" stroke-width="1.2" stroke-linecap="round"/>${leaf(14,32,-60,1,"#5fae2c")}${leaf(30,20,-160,.9,"#76c23a")}${leaf(52,12,-20,1.1,"#4e9e24")}${leaf(78,14,150,.8,"#86cf45")}${leaf(100,16,-10,.9,"#5fae2c")}${leaf(124,18,170,.75,"#76c23a")}<circle cx="64" cy="13" r="3" fill="#f7a8c8" stroke="#b5527a"/><circle cx="112" cy="17" r="2.6" fill="#ffd3e4" stroke="#b5527a"/></svg>`;
+ const V="url(\"data:image/svg+xml,"+encodeURIComponent(vine)+"\")";
+ const st=document.createElement("style");st.id="sk2css";st.textContent=`
+html body.sk2 #app .card.parch.parch.parch,html body.sk2 #app #hcard details.chtab.chtab{position:relative;overflow:visible!important;color:#3a2208!important;
+ background:radial-gradient(ellipse at 50% 35%,#fffaf0 0%,#fcf0d6 55%,#f0d9a8 100%) padding-box,linear-gradient(160deg,#fff0a8,#e7a92a 35%,#ffd968 60%,#c98612) border-box!important;
+ border:4px solid transparent!important;border-radius:26px!important;
+ box-shadow:0 0 0 1.5px #6b3f0a,inset 0 0 0 2px rgba(160,105,25,.35),inset 0 0 26px rgba(175,120,45,.38),0 8px 18px rgba(0,0,0,.38)!important;backdrop-filter:none!important}
+html body.sk2 #app .card.parch.parch.parch::before,html body.sk2 #app #hcard details.chtab.chtab::before{content:"";position:absolute;left:-10px;right:-10px;top:-22px;height:44px;pointer-events:none;z-index:2;
+ background:${V} left top/112px 45px no-repeat,${V} right top/112px 45px no-repeat;}
+html body.sk2 #app .card.parch.parch.parch::before{background:${V} left top/112px 45px no-repeat,${V} right top/112px 45px no-repeat}
+html body.sk2 #app .card.parch.parch.parch::after,html body.sk2 #app #hcard details.chtab.chtab::after{content:"";position:absolute;left:50%;bottom:-17px;width:62px;height:34px;transform:translateX(-50%);background:url(sk_gem.webp) center/contain no-repeat;pointer-events:none;z-index:3}
+html body.sk2 #app .card.parch.parch.parch *,html body.sk2 #app #hcard details.chtab.chtab *{text-shadow:none}
+html body.sk2 #app .card.parch.parch.parch,html body.sk2 #app .card.parch.parch.parch b,html body.sk2 #app .card.parch.parch.parch small,html body.sk2 #app .card.parch.parch.parch .qt,html body.sk2 #app #hcard details.chtab.chtab,html body.sk2 #app #hcard details.chtab.chtab small{color:#3a2208!important}
+html body.sk2 #app .card.parch.parch.parch .ph.ph,html body.sk2 #app #hcard details.chtab.chtab>summary{display:flex!important;align-items:center;justify-content:center;gap:8px;width:fit-content;max-width:94%;margin:-6px auto 10px!important;padding:5px 26px!important;position:relative;
+ background:linear-gradient(#fffaf0,#f6e3b8 60%,#e9cc8e)!important;border:2px solid #b98a3c!important;border-radius:12px!important;box-shadow:inset 0 2px 0 #fff,inset 0 -3px 6px rgba(160,110,40,.3),0 3px 6px rgba(0,0,0,.25)!important;
+ color:#16245a!important;font-weight:900!important;font-size:1.45rem!important;letter-spacing:.3px;line-height:1.15;text-shadow:0 1px 0 #fff!important;flex-wrap:wrap}
+html body.sk2 #app .card.parch.parch.parch .ph.ph::before,html body.sk2 #app .card.parch.parch.parch .ph.ph::after{content:"";position:absolute;top:3px;bottom:3px;width:12px;border-radius:7px;background:linear-gradient(90deg,#c9a05a,#fff2cf 45%,#d6ae68);border:1.5px solid #9a6d2a}
+html body.sk2 #app .card.parch.parch.parch .ph.ph::before{left:-9px}html body.sk2 #app .card.parch.parch.parch .ph.ph::after{right:-9px}
+html body.sk2 #app .card.parch.parch.parch .ph.ph small{flex-basis:100%;text-align:center;font-size:.5em!important;font-weight:700;color:#6a4a20!important}
+html body.sk2 #app .card.parch.parch.parch .ph.ph img{height:1.6em!important;width:auto!important}
+html body.sk2 #app #hcard details.chtab.chtab>summary{font-size:1.15rem!important;list-style:none}
+html body.sk2 #app #hcard details.chtab.chtab>summary span{color:#6a4a20!important}
+html body.sk2 #app .card.parch.mtc.mtc{background:url(sk_castle.webp) right 6px bottom 6px/72% auto no-repeat padding-box,radial-gradient(ellipse at 50% 35%,#fffaf0 0%,#fcf0d6 55%,#f0d9a8 100%) padding-box,linear-gradient(160deg,#fff0a8,#e7a92a 35%,#ffd968 60%,#c98612) border-box!important}
+html body.sk2 #app .card.parch.parch.parch .qb{background:rgba(120,80,30,.18)!important;border:1px solid rgba(120,80,30,.35)!important}
+html body.sk2 #app .card.parch.parch.parch .cats button.lvd,html body.sk2 #app .card.parch.parch.parch .cats button.on:not([data-s]){border:2px solid #c99a4e!important}
+html body.sk2 #app .card.parch.parch.parch .cats:not(.subs) button.on{background:linear-gradient(#ffe27a,#f2a81e)!important;color:#3a1c02!important;box-shadow:0 0 0 2px #8a5a12,0 3px 0 #8a5a12!important}
+html body.sk2 #app .card.parch.parch.parch .cats:not(.subs) button.lvd{background:linear-gradient(#fffaf0,#f1dcae)!important;color:#5a3a12!important}
+/* boutons */
+html body.sk2 #app .btn.big.go.go,html body.sk2 #app .btn.big.bossb.bossb,html body.sk2 #app .btn.big.survb.survb,html body.sk2 #app .btn.revb.revb,html body.sk2 main #app .btn.btn.btn.btn.btn[onclick^="revInfo"],html body.sk2 main #app .btn.btn.btn.btn.btn[onclick*="pre('rev')"],html body.sk2 #app .hmt .mt.mt{position:relative;overflow:visible!important;border:3px solid #ffe08a!important;border-radius:22px!important;
+ box-shadow:0 0 0 2px #7a4a08,inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.18),0 5px 0 #5e3606,0 9px 16px rgba(0,0,0,.4)!important;color:#fff!important;text-shadow:0 2px 0 rgba(0,0,0,.45)!important;font-weight:900!important}
+html body.sk2 #app .btn.big.go.go{background:linear-gradient(#ffe066,#ffb21c 50%,#f08a0c)!important;color:#2a1404!important;text-shadow:0 1px 0 rgba(255,236,170,.9)!important;font-size:1.55rem!important;margin-top:14px!important}
+html body.sk2 #app .btn.big.go.go::before,html body.sk2 #app .btn.big.go.go::after{content:"";position:absolute;left:50%;width:46px;height:26px;transform:translateX(-50%);background:url(sk_gem.webp) center/contain no-repeat;pointer-events:none}
+html body.sk2 #app .btn.big.go.go::before{top:-17px}html body.sk2 #app .btn.big.go.go::after{bottom:-17px}
+html body.sk2 #app .btn.big.go.go .bic{background:none!important;border-radius:50%}
+html body.sk2 #app .btn.big.go.go .qm{background:rgba(255,240,190,.75)!important;color:#5a2d02!important;border:2px solid #9a5a06!important}
+html body.sk2 #app .btn.big.bossb.bossb{background:linear-gradient(#ff6a55,#d8261f 50%,#8f0f12)!important}
+html body.sk2 #app .btn.big.survb.survb{background:linear-gradient(#4fb2ff,#1a6fe0 50%,#0c3f9a)!important}
+html body.sk2 #app .btn.revb.revb,html body.sk2 main #app .btn.btn.btn.btn.btn[onclick^="revInfo"],html body.sk2 main #app .btn.btn.btn.btn.btn[onclick*="pre('rev')"]{background:linear-gradient(#45dcec,#13a6c0 50%,#0a6f86)!important;opacity:1!important}
+html body.sk2 main #app .btn.btn.btn.btn.btn[onclick^="revInfo"]{filter:saturate(.55)}
+html body.sk2 main #app .btn.btn.btn.btn.btn[onclick^="revInfo"] .qm,html body.sk2 main #app .btn.btn.btn.btn.btn[onclick*="pre('rev')"] .qm{background:linear-gradient(#ffe27a,#f2a81e)!important;color:#3a1c02!important;border:2px solid #7a4a08!important;text-shadow:none!important}
+html body.sk2 #app .btn.big.bossb.bossb .qm,html body.sk2 #app .btn.big.survb.survb .qm,html body.sk2 #app .btn.revb.revb .qm{background:linear-gradient(#ffe27a,#f2a81e)!important;color:#3a1c02!important;border:2px solid #7a4a08!important;text-shadow:none!important}
+html body.sk2 #app .hmt .mt.mt{background:linear-gradient(#b06bff,#7a2ee0 50%,#4a149f)!important;padding:8px 8px 8px 72px!important;text-align:left!important;min-height:78px;font-family:inherit!important;display:flex!important;flex-direction:column;justify-content:center;align-items:flex-start}
+html body.sk2 #app .hmt .mt.mt *{font-family:inherit!important}
+html body.sk2 #app .hmt .mt.mt[onclick*="sell"]{background:linear-gradient(#5ad874,#20a040 50%,#0f6a25)!important}
+html body.sk2 #app .hmt .mt.mt::before{content:"";position:absolute;left:6px;top:50%;width:60px;height:58px;transform:translateY(-50%);background:url(sk_shield.webp) center/contain no-repeat;filter:drop-shadow(0 2px 2px rgba(0,0,0,.4))}
+html body.sk2 #app .hmt .mt.mt[onclick*="sell"]::before{background-image:url(sk_shop.webp)}
+html body.sk2 #app .hmt .mt.mt b{color:#ffe27a!important;font-size:1.02rem!important;line-height:1.1;white-space:nowrap}html body.sk2 #app .hmt .mt.mt small{color:#fff!important}
+/* barre du bas */
+html body.sk2 #tabbar#tabbar{background:linear-gradient(#b5793a,#7d4a1c 55%,#5a3210)!important;border:3px solid #f2c14b!important;border-bottom:none!important;border-radius:22px 22px 0 0!important;box-shadow:0 0 0 1.5px #5a3208,inset 0 2px 0 rgba(255,230,170,.45),0 -4px 14px rgba(0,0,0,.45)!important}
+html body.sk2 #tabbar#tabbar button{background:none!important;border:none!important;box-shadow:none!important;color:#fff!important;text-shadow:0 0 2px #3a1c02,0 2px 0 #3a1c02!important;font-weight:900!important}
+html body.sk2 #tabbar#tabbar button.on{background:linear-gradient(#a45cff,#6a22d4 55%,#45129a)!important;border:2px solid #ffd35a!important;border-radius:16px!important;box-shadow:0 0 0 1.5px #3a1066,0 0 12px rgba(190,120,255,.7)!important;color:#ffe27a!important}
+html body.sk2 #tabbar#tabbar button img{background:none!important;filter:drop-shadow(0 2px 1px rgba(0,0,0,.45))}
+`;document.head.appendChild(st);
+ window.sk2On=()=>{try{return !!(window.ffOn&&ffOn("skin2"))}catch(e){return false}};
+ window.sk2Apply=()=>{const on=sk2On();document.body.classList.toggle("sk2",on);
+  const SW=[["#tabbar button img",i=>"s_t"+(i+1)+".webp",i=>"sk_t"+(i+1)+".webp"]];
+  document.querySelectorAll("#tabbar button img").forEach((im,i)=>{const n=on?"sk_t"+(i+1)+".webp":"s_t"+(i+1)+".webp";if(im.getAttribute("src")!==n)im.setAttribute("src",n)});
+  const B=[[".btn.go .bic","s_b_go.webp","sk_swords.webp"],[".btn.revb .bic","s_b_rev.webp","sk_refresh.webp"],[".card.parch.mtc .ph img","s_books.webp","sk_books.webp"]];
+  B.forEach(([q,a,b])=>document.querySelectorAll("#app "+q).forEach(im=>{const n=on?b:a;if(im.getAttribute("src")!==n)im.setAttribute("src",n)}));try{sk2Rev()}catch(e){}};
+ window.sk2Rev=()=>{if(!sk2On())return;document.querySelectorAll('#app .btn[onclick^="revInfo"],#app .btn[onclick*="pre(\'rev\')"]').forEach(b=>{const t=b.firstChild;if(t&&t.nodeType==3&&t.nodeValue.trim().startsWith("🔁")){t.nodeValue=t.nodeValue.replace("🔁","").trimStart();b.insertAdjacentHTML("afterbegin",'<img src="sk_refresh.webp" alt="" style="height:44px;width:auto;margin-right:8px;vertical-align:middle;filter:drop-shadow(0 2px 1px rgba(0,0,0,.4))">');b.style.display="flex";b.style.alignItems="center";b.style.justifyContent="center"}})};
+ let q=0;const go=()=>{try{new MutationObserver(()=>{if(!q)q=requestAnimationFrame(()=>{q=0;try{sk2Apply()}catch(e){}})}).observe(document.body,{childList:true,subtree:true});sk2Apply()}catch(e){}};if(document.body)go();else addEventListener("DOMContentLoaded",go);
+ 
+})();
 </script>
 <script>if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))</script><script>
 /* bouton d'actualisation : vide le cache et recharge la dernière version */
@@ -4899,6 +4964,7 @@ window.obNext=()=>{if(!document.getElementById("obg")){obShow();}
    Pour chaque nouveauté : l'ajouter ici, et l'entourer de ffOn("cle") dans le jeu.
    Quand le développeur l'ouvre, sa fiche « news » apparaît automatiquement dans les Nouveautés des joueurs. */
 window.FFL=[ /* exemple : {k:"boutique",n:"Boutique en argent réel",news:{t:"La boutique",l:[["🛒","Texte de la nouveauté"]]}} */
+ {k:"skin2",n:"Nouveau style de l’accueil : cadres parchemin dorés, boutons brillants, barre du bas en bois",news:{t:"L’accueil fait peau neuve 🎨",l:[["📜","Les sections de l’accueil (Matières, Niveau, Quêtes du jour, Coffres) ont un nouveau <b>cadre en parchemin doré</b>."],["⚔️","Les boutons <b>Partir au combat</b>, Boss, Survie, Boss à deux, Vendeur et Révision ont de nouvelles couleurs et de nouvelles icônes."],["🏠","La barre du bas est maintenant en <b>bois et or</b>, avec de nouvelles icônes."]]}},
  {k:"velk4",n:"Nouveaux Velkis : 7 familles de plus (21 visuels, Velkis n° 115 à 135)",news:{t:"Encore 7 nouvelles familles de Velkis ✨",l:[["<img src=\"vp08.webp\" alt=\"\" style=\"height:1.8em\">","<b>7 familles</b> de Velkis changent de visage : esprit de feu, phalène de cristal, slime arc-en-ciel, golem à rouages, griffon de plumes, œil de foudre et renard de givre !"],["🎒","Si tu les avais déjà capturés, tu les gardes : seuls leur image et leur nom changent."]]}},
  {k:"velk3",n:"Nouveaux Velkis : 7 familles de plus (21 visuels, Velkis n° 94 à 114)",news:{t:"De nouveaux Velkis arrivent ✨",l:[["<img src=\"vo11.webp\" alt=\"\" style=\"height:1.8em\">","<b>7 familles</b> de Velkis changent de visage : serpent mécanique, créature des nébuleuses, démon maudit, ange aux mille yeux, crabe d’acier, tortue-montagne et plante carnivore !"],["🎒","Si tu les avais déjà capturés, tu les gardes : seuls leur image et leur nom changent."]]}},
  {k:"chq",n:"Coffres un par un : un seul minuteur à la fois, le suivant démarre quand le coffre est ouvert",news:{t:"Les coffres s’ouvrent un par un 🎁",l:[["⏳","Un seul coffre se <b>déverrouille à la fois</b>. Les autres attendent leur tour avec le symbole ⏸."],["🔓","Dès que tu <b>ouvres</b> le coffre déverrouillé, le minuteur du coffre suivant démarre."],["⚡","Tu peux toujours ouvrir un coffre tout de suite avec des pièces."]]}},

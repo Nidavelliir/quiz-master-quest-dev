@@ -4876,7 +4876,11 @@ window.obGo=async()=>{if(window.OBB)return;window.OBB=1;obM("Connexion à Google
  catch(e){window.OBB=0;window.OBW=0;obM(errTxt(e))}};
 window.obNext=()=>{if(!document.getElementById("obg")){obShow();}
  if(!pinH()&&isOn()&&!ST.dev){window.OBW=1;obStep(2);return}
- if(FIRST){obStep(3);return}
+ if(FIRST){const B=S,O=ST.ps.filter(p=>p&&!p.__rm&&p!==B);
+  if(!O.length){obStep(3);return}
+  /* le compte Google a déjà des profils (autre téléphone, réinstallation…) : on retire le profil vide créé à l'installation au lieu d'en créer un deuxième */
+  const bi=ST.ps.indexOf(B);if(bi>=0)ST.ps.splice(bi,1);ST.cur=ST.ps.indexOf(O[0]);S=O[0];FIRST=false;save();
+  obClose();try{frRestart()}catch(e){}try{home()}catch(e){}setTimeout(()=>tell("✅ Compte connecté : "+(O.length>1?"les profils "+O.map(p=>"<b>"+esc(p.pn||"?")+"</b>").join(", ")+" sont retrouvés.":"le profil de <b>"+esc(O[0].pn||"?")+"</b> est retrouvé.")+"<br>Pour ajouter un autre enfant, passe par l’Espace parent."),300);return}
  obClose();try{home()}catch(e){}setTimeout(()=>tell("✅ Compte connecté : tes profils sont retrouvés."),300)};
 
 

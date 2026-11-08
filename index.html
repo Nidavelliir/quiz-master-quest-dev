@@ -932,7 +932,7 @@ function pick(k){const dgR=!G.cur[k][1]&&Math.random()*100<DDG();
  const good=G.cur[k][1];rec(good,k);let fat=false;if(good){if(ul)d*=4;else if(cr)d*=2;d=Math.round(d*evMul("dmg"));if(!G.boss&&!G.zone&&!G.coop&&G.mx&&Math.random()*100<eqB("torse")){fat=true;d=Math.max(d,G.mhp)}}
  if(!good)bs[k].classList.add("ko");
  if(good){G.mhp=Math.max(0,G.mhp-d);if(!G.zone)G.php=Math.min(G.pmx||100,G.php+2);$("pot").textContent=(fat?"☠️ COUP FATAL ! 💥 −":ul?"🌟 ATTAQUE ULTIME ×4 ! 💥 −":cr?"⭐ COUP CRITIQUE ! 💥 −":"💥 −")+d+" PV pour le monstre !";G.streak++;G.best=Math.max(G.best,G.streak);qEv("ok",1,{s:G.q[0]});qEv("streak",G.streak);$("h").classList.add("atk");$("m").classList.add("hit");dmgFx("m",d,ul?2:cr?1:0);if(ul)bd("ult");else if(cr)bd("crit");save()}
- else{const zn=!!G.zone,u2=!zn&&ul,c2=!zn&&cr;let hd=u2?80:c2?40:20;if(!zn)hd=Math.max(0,hd-eqB("epaules"));const shd=G.shU&&!G.shUsed&&!dgR;if(shd){G.shUsed=true;if(!(ST.dev&&!window.PVW))S.inv.bc=Math.max(0,(S.inv.bc||0)-1);save();hd=0}if(dgR)hd=0;G.php=Math.max(0,G.php-hd);G.wrong++;$("pot").textContent=dgR?"💨 Esquive ! Tu évites l’attaque !":shd?"🛡️ Bouclier ! L’attaque du monstre est annulée !":zn?(G.php>0?"❌ Erreur ! Il te reste "+erW(Math.ceil(G.php/20)-1)+" possible"+(Math.ceil(G.php/20)-1>1?"s":""):"❌ Erreur de trop !"):(u2?"🌟 ATTAQUE ULTIME ×4 ! ":c2?"💢 COUP CRITIQUE ! ":"❌ ")+"−"+hd+" PV pour ton héros";G.streak=0;$("m").classList.add("atk");if(dgR){$("h").classList.add("dodge")}else if(shd){$("h").classList.add("hit")}else{$("h").classList.add("hit");dmgFx("h",hd,u2?2:c2?1:0)}}
+ else{const zn=!!G.zone,u2=!zn&&ul,c2=!zn&&cr;let hd=u2?80:c2?40:20;if(!zn)hd=Math.max(0,hd-eqB("epaules"));if(!zn&&window.lvMaxDmg)hd=Math.round(hd*lvMaxDmg());const shd=G.shU&&!G.shUsed&&!dgR;if(shd){G.shUsed=true;if(!(ST.dev&&!window.PVW))S.inv.bc=Math.max(0,(S.inv.bc||0)-1);save();hd=0}if(dgR)hd=0;G.php=Math.max(0,G.php-hd);G.wrong++;$("pot").textContent=dgR?"💨 Esquive ! Tu évites l’attaque !":shd?"🛡️ Bouclier ! L’attaque du monstre est annulée !":zn?(G.php>0?"❌ Erreur ! Il te reste "+erW(Math.ceil(G.php/20)-1)+" possible"+(Math.ceil(G.php/20)-1>1?"s":""):"❌ Erreur de trop !"):(u2?"🌟 ATTAQUE ULTIME ×4 ! ":c2?"💢 COUP CRITIQUE ! ":"❌ ")+"−"+hd+" PV pour ton héros";G.streak=0;$("m").classList.add("atk");if(dgR){$("h").classList.add("dodge")}else if(shd){$("h").classList.add("hit")}else{$("h").classList.add("hit");dmgFx("h",hd,u2?2:c2?1:0)}}
  try{$("mbar").style.width=G.mhp/G.mx*100+"%";$("mnum").textContent="💀 "+G.mhp;$("hbar").style.width=hpP()+"%";$("hbar").style.background=hpg(hpP());$("hnum").textContent=hpT()}catch(e){}
  G.i++;after(good,d);setTimeout(()=>{ if(G.mhp<=0)capture(); else if(G.php<=0)lose(); else ask() },1100);
 }
@@ -4968,6 +4968,8 @@ window.obNext=()=>{if(!document.getElementById("obg")){obShow();}
    Pour chaque nouveauté : l'ajouter ici, et l'entourer de ffOn("cle") dans le jeu.
    Quand le développeur l'ouvre, sa fiche « news » apparaît automatiquement dans les Nouveautés des joueurs. */
 window.FFL=[ /* exemple : {k:"boutique",n:"Boutique en argent réel",news:{t:"La boutique",l:[["🛒","Texte de la nouveauté"]]}} */
+ {k:"lv3e",n:"Niveaux 5e, 4e et 3e + niveau Max (questions de la 6e à la 3e, dégâts reçus +50 %)",news:{t:"Nouveaux niveaux : 5e, 4e et 3e 🎓",l:[["🎓","Trois nouveaux niveaux arrivent : <b>5e</b>, <b>4e</b> et <b>3e</b>, avec des questions qui suivent le programme du collège."],["🏆","Le niveau <b>Max</b> se place maintenant après la 3e : il mélange toutes les questions de la 6e à la 3e."],["🔥","Attention : au niveau <b>Max</b>, les dégâts reçus augmentent de <b>50 %</b> !"]]}},
+ {k:"qx2",n:"Deux fois plus de questions à tous les niveaux",news:{t:"Deux fois plus de questions 📚",l:[["📚","Il y a maintenant <b>deux fois plus de questions</b> dans chaque matière et à chaque niveau."],["🔁","Les questions se répètent beaucoup moins souvent."]]}},
  {k:"abq",n:"Anti-abandons : plus de 3 abandons dans la même minute → seuls les Velkis déjà rencontrés apparaissent jusqu’au prochain combat gagné",news:{t:"Abandonner ne sert plus à chercher un Velki 🏳️",l:[["🏳️","Si tu abandonnes <b>plus de 3 combats dans la même minute</b>, seuls des Velkis que tu as <b>déjà rencontrés</b> apparaissent."],["🏆","Tout redevient normal dès que tu <b>gagnes un combat</b>."]]}},
  {k:"dexev",n:"Velkipedia : les 3 évolutions sous un Velki sont cliquables",news:{t:"Velkipedia : touche les évolutions 📖",l:[["👆","Dans la Velkipedia, touche une des <b>3 évolutions</b> sous un Velki pour l’afficher en grand."],["🔒","Un Velki jamais rencontré reste caché, et un Velki rencontré mais pas capturé reste en gris."]]}},
  {k:"skin2",n:"Nouveau style de l’accueil : cadres parchemin dorés, boutons brillants, barre du bas en bois",news:{t:"L’accueil fait peau neuve 🎨",l:[["📜","Les sections de l’accueil (Matières, Niveau, Quêtes du jour, Coffres) ont un nouveau <b>cadre en parchemin doré</b>."],["⚔️","Les boutons <b>Partir au combat</b>, Boss, Survie, Boss à deux, Vendeur et Révision ont de nouvelles couleurs et de nouvelles icônes."],["🏠","La barre du bas est maintenant en <b>bois et or</b>, avec de nouvelles icônes."]]}},
@@ -4994,6 +4996,9 @@ window.FFL=[ /* exemple : {k:"boutique",n:"Boutique en argent réel",news:{t:"La
 /* ---------- qualité des questions : questions « cadeau » retirées ou réécrites ---------- */
 (function(){const RM=new Set(["Comment dit-on « J’aime le chocolat » ?", "Comment dit-on « banane » en anglais ?", "Comment dit-on « chocolat » en anglais ?", "Comment dit-on « dangereux » en anglais ?", "Comment dit-on « difficile » en anglais ?", "Comment dit-on « décembre » en anglais ?", "Comment dit-on « jus d’orange » en anglais ?", "Comment dit-on « lion » en anglais ?", "Comment dit-on « novembre » en anglais ?", "Comment dit-on « octobre » en anglais ?", "Comment dit-on « pilote » en anglais ?", "Comment dit-on « policier » en anglais ?", "Comment dit-on « salade » en anglais ?", "Comment dit-on « septembre » en anglais ?", "Comment dit-on « table » en anglais ?", "Comment dit-on « tomate » en anglais ?", "Comment dit-on « train » en anglais ?", "Comment dit-on « éléphant » en anglais ?", "Que veut dire « December » ?", "Que veut dire « November » ?", "Que veut dire « October » ?", "Que veut dire « September » ?", "Que veut dire « banana » ?", "Que veut dire « chocolate » ?", "Que veut dire « dangerous » ?", "Que veut dire « difficult » ?", "Que veut dire « elephant » ?", "Que veut dire « lion » ?", "Que veut dire « orange juice » ?", "Que veut dire « pilot » ?", "Que veut dire « policeman » ?", "Que veut dire « salad » ?", "Que veut dire « table » ?", "Que veut dire « tomato » ?", "Que veut dire « train » ?", "Quel mur a séparé Berlin de 1961 à 1989 ?"]),RW={"Quel est le féminin de « un voisin » ?": ["Quel est le féminin de « un voisin » ?", ["une voisine", "une voisinne", "une voisinière", "une voisinesse"], 0], "Quel est le féminin de « un boulanger » ?": ["Quel est le féminin de « un boulanger » ?", ["une boulangère", "une boulangeuse", "une boulangeresse", "une boulangerre"], 0], "Quel est le féminin de « un cousin » ?": ["Quel est le féminin de « un cousin » ?", ["une cousine", "une cousinne", "une cousinière", "une cousinesse"], 0], "Quel est le féminin de « un grand-père » ?": ["Quel est le féminin de « un grand-père » ?", ["une grand-mère", "une grande-père", "une grande-mère", "une grand-pèresse"], 0], "Que faisaient les chasseurs-cueilleurs pour se nourrir ?": ["Comment se nourrissaient les premiers hommes, avant l’agriculture ?", ["ils chassaient, pêchaient et cueillaient", "ils élevaient des vaches", "ils achetaient au marché", "ils cultivaient du blé"], 0], "Quel neveu de Napoléon Ier devient empereur en 1852 ?": ["Qui devient empereur des Français en 1852 ?", ["Napoléon III", "Louis XVIII", "Louis-Philippe", "Napoléon Ier"], 0], "Quel texte de 1789 proclame les droits de tous les hommes ?": ["Quel texte est adopté en août 1789 par l’Assemblée nationale ?", ["La Déclaration des droits de l’homme et du citoyen", "Le traité de Versailles", "L’édit de Nantes", "La Constitution de 1958"], 0], "Quel code de lois rédigé sous Napoléon est encore la base du droit civil ?": ["Quel recueil de lois, rédigé sous Napoléon en 1804, règle encore la vie des familles ?", ["Le Code civil", "La Constitution de 1958", "La Déclaration des droits de l’homme et du citoyen", "Le Code noir"], 0]};for(let i=0;i<L.length;i++){if(!L[i])continue;L[i]=L[i].filter(q=>!RM.has(q[1])).map(q=>{const r=RW[q[1]];return r?[q[0],r[0],r[1].slice(),r[2]]:q})}})();
 
+
+/* ---------- 🧹 relecture : leurres trop faciles remplacés ---------- */
+(()=>{const RW2={"Avec quelle matière les hommes préhistoriques fabriquaient-ils leurs outils ?": ["la pierre", "le fer", "l’or", "le verre"], "Les hommes préhistoriques ont-ils connu les dinosaures ?": ["non, ils avaient disparu bien avant", "oui, au début du Paléolithique", "oui, mais seulement en Afrique", "oui, ils les chassaient avec des lances"], "Comment appelle-t-on les dessins et peintures sur les parois des grottes ?": ["l’art rupestre", "l’art roman", "l’enluminure", "la mosaïque"], "Quelle invention marque la fin de la Préhistoire ?": ["l’écriture", "l’agriculture", "la roue", "la poterie"], "Comment les hommes préhistoriques faisaient-ils du feu ?": ["en frottant du bois ou en frappant des silex", "en faisant fondre du métal", "en attendant seulement que la foudre tombe", "en frottant deux os de mammouth"], "Quel moyen de transport se développe au XIXe siècle grâce à la machine à vapeur ?": ["Le chemin de fer", "L’automobile", "L’avion", "Le bateau à voile"]};for(let i=0;i<L.length;i++){if(!L[i])continue;L[i]=L[i].map(q=>{const r=RW2[q[1]];if(!r)return q;const o=sh(r.slice());return [q[0],q[1],o,o.indexOf(r[0])]})}})();
 /* ---------- 📚 questions supplémentaires (fonctionnalité « qplus », fichier qx.json) ---------- */
 let QX=null,QXM=0;window.qxMerge=()=>{if(QXM||!QX||!(window.ffOn&&ffOn("qplus")))return;for(let i=0;i<6;i++)if(QX[i]&&L[i])L[i]=L[i].concat(QX[i]);QXM=1};
 fetch("qx.json").then(r=>r.json()).then(j=>{QX=j;qxMerge();try{lvmaxApply()}catch(e){}}).catch(()=>{});setInterval(()=>{try{qxMerge()}catch(e){}},5000);
@@ -5005,6 +5010,65 @@ window.lvmaxApply=()=>{if(!lvmaxOn())return;if(LV.length<7){LV.push("Max");try{i
 setInterval(()=>{try{lvmaxApply()}catch(e){}},3000);
 {const s0=start;start=function(b,a){try{lvmaxApply()}catch(e){}if(S.lv>=LV.length)S.lv=LV.length-1;if(!L[S.lv]){tell("⏳ Chargement des questions… réessaie dans quelques secondes.");return}return s0(b,a)}}
 {const v0=survive;survive=function(){try{lvmaxApply()}catch(e){}if(S.lv>=LV.length)S.lv=LV.length-1;if(lvmaxOn()&&!L[7]){tell("⏳ Chargement des questions… réessaie dans quelques secondes.");return}return v0()}}
+
+/* ---------- 🎓 niveaux 5e, 4e, 3e + niveau Max (6e→3e, dégâts +50 %) (fonction « lv3e ») et questions doublées (fonction « qx2 ») ---------- */
+window.lv3eOn=()=>!!(window.ffOn&&ffOn("lv3e"));
+window.qx2On=()=>!!(window.ffOn&&ffOn("qx2"));
+{const r=n=>Math.floor(Math.random()*n),fr=v=>String(Math.round(v*100)/100).replace(".",","),pick=a=>a[r(a.length)];
+ const opts=(a,ds,fmt)=>{fmt=fmt||fr;const S2=new Set([fmt(a)]);const o=[a];for(const d of ds){if(o.length>=4)break;if(!S2.has(fmt(d))){S2.add(fmt(d));o.push(d)}}let g=0;while(o.length<4&&g++<40){const d=a+[-3,-2,-1,1,2,3,5,10][r(8)];if(!S2.has(fmt(d))){S2.add(fmt(d));o.push(d)}}const sh2=sh(o);return [sh2.map(fmt),sh2.indexOf(a)]};
+ const M=(q,a,ds,fmt)=>{const [o,i]=opts(a,ds,fmt);return ["Maths",q,o,i]};
+ const sg=v=>v<0?"("+String(v).replace("-","−")+")":String(v),fmtS=v=>String(Math.round(v*100)/100).replace(".",",").replace("-","−");
+ window.mqN=l=>{
+  if(l==9)l=[6,7,8][r(3)];
+  if(l==10){const t=r(5);
+   if(t==0){const a=2+r(8),b=1+r(9),x=-9+r(19),c=a*x+b;return M("Trouve x : "+a+"x + "+b+" = "+String(c).replace("-","−"),x,[x+1,-x,x-1],fmtS)}
+   if(t==1){const n=2+r(4),e=2+r(3);return M("Combien vaut "+n+"<sup>"+e+"</sup> × "+n+" ?",Math.pow(n,e+1),[Math.pow(n,e),Math.pow(n,e)*2,n*(e+1)])}
+   if(t==2){const p=pick([10,20,25,30,40]),v=pick([40,80,120,200,250,400]);return M("Un prix de "+v+" € baisse de "+p+" %. Quel est le nouveau prix (en €) ?",v*(100-p)/100,[v-p,v*p/100,v*(100+p)/100])}
+   if(t==3){const a=1+r(9),b=1+r(9);return M("Développe et calcule pour x = 2 : (x + "+a+")(x + "+b+")",(2+a)*(2+b),[4+a*b,(2+a)+(2+b),2*a*b])}
+   const k=pick([2,3,4,5,6,7,8,9,11,12,13,15]);return M("Combien vaut √"+(k*k)+" × 2 ?",2*k,[k,k*k,2*k+2])}
+  if(l==6){const t=r(5);// 5e : programme de 6e
+   if(t==0){const d=pick([2,3,4,5,10]),n=1+r(d-1),k=d*(2+r(9));return M("Combien font "+n+"/"+d+" de "+k+" ?",n*k/d,[k/d,n*k,k-n])}
+   if(t==1){const x=(10+r(990))/100,m=pick([10,100,1000]);return M("Combien font "+fr(x)+" × "+m+" ?",x*m,[x*m/10,x*m*10,x+m])}
+   if(t==2){const a=2+r(20),b=2+r(9),c=2+r(9);return M("Combien font "+a+" + "+b+" × "+c+" ?",a+b*c,[(a+b)*c,a*b+c,a+b+c])}
+   if(t==3){const p=pick([10,20,25,50,75]),v=pick([20,40,60,80,100,120,200]);return M("Combien font "+p+" % de "+v+" ?",p*v/100,[v-p,p*v/10,v/p])}
+   const b=3+r(7),q=5+r(30),re=r(b),a=b*q+re;return M("Quel est le reste de la division de "+a+" par "+b+" ?",re,[q,b-re,re+1])}
+  if(l==7){const t=r(5);// 4e : programme de 5e
+   if(t==0){const a=-(1+r(15)),b=1+r(20);return M("Combien font "+sg(a)+" + "+b+" ?",a+b,[-(a+b),a-b,b-a],fmtS)}
+   if(t==1){const a=1+r(15),b=-(1+r(15));return M("Combien font "+a+" − "+sg(b)+" ?",a-b,[a+b,b-a,-(a-b)],fmtS)}
+   if(t==2){const a=2+r(9),b=2+r(9),c=1+r(9);return M("Combien font "+a+" × ("+b+" + "+c+") ?",a*(b+c),[a*b+c,a+b*c,a*b*c])}
+   if(t==3){const d=pick([5,7,9,11,13]),x=1+r(d-2),y=1+r(d-1-x);return M("Combien font "+x+"/"+d+" + "+y+"/"+d+" ?",(x+y)+"/"+d,[(x+y)+"/"+(2*d),(x*y)+"/"+d,(x+y+1)+"/"+d],v=>String(v))}
+   const n=2+r(6),p=2+r(9),m=n+1+r(8);return M(n+" cahiers coûtent "+(n*p)+" €. Combien coûtent "+m+" cahiers (en €) ?",m*p,[m*p+p,n*p+m,m+p])}
+  // 3e : mélange 5e / 4e / 3e
+  const t=r(6);
+  if(t==0){const a=-(2+r(9)),b=-(2+r(9));return M("Combien font "+sg(a)+" × "+sg(b)+" ?",a*b,[-(a*b),a+b,-(a+b)],fmtS)}
+  if(t==1){const n=pick([2,3,5,10]),e=2+r(n==10?4:4);return M("Combien vaut "+n+"<sup>"+e+"</sup> ?",Math.pow(n,e),[n*e,Math.pow(n,e-1),Math.pow(e,n)])}
+  if(t==2){const a=2+r(8),x=1+r(12),b=r(20);return M("Trouve x : "+a+"x + "+b+" = "+(a*x+b),x,[x+1,(a*x+b)/a,x+b])}
+  if(t==3){const g=2+r(6),a=1+r(9),b=a+1+r(9),gc=(x,y)=>y?gc(y,x%y):x;if(gc(a,b)!=1)return mqN(8);return M("Quelle est la forme irréductible de la fraction "+(a*g)+"/"+(b*g)+" ?",a+"/"+b,[(a*g)+"/"+b,a+"/"+(b*g),(a+1)+"/"+b],v=>String(v))}
+  if(t==4){const x=-5+r(11),a=2+r(5),b=-5+r(11);return M("Calcule "+a+"x "+(b<0?"− "+(-b):"+ "+b)+" pour x = "+String(x).replace("-","−"),a*x+b,[a+x+b,a*x-b,-(a*x+b)],fmtS)}
+  const k=pick([4,9,16,25,36,49,64,81,100,121,144]);return M("Combien vaut √"+k+" ?",Math.sqrt(k),[k/2,Math.sqrt(k)+1,k*k>1000?Math.sqrt(k)*2:k*2])};
+}
+{const m1=mq;mq=l=>lv3eOn()&&l>=6?mqN(l):m1(l)}
+window.LV0=LV.slice(0,6);
+window.lvMaxDmg=()=>lv3eOn()&&LV[S.lv]==="Max"?1.5:1;
+window.lv3eApply=()=>{
+ if(lv3eOn()){
+  if(LV.length!==10||LV[6]!=="5e"){LV.length=6;LV.push("5e","4e","3e","Max");window.__LV3=0;try{if(document.getElementById("hcard"))home()}catch(e){}}
+  (ST.ps||[]).concat(S?[S]:[]).forEach(P=>{if(P&&!P.lv3){if(P.lv==6)P.lv=9;P.lv3=1}});
+  while(SBL.length<11)SBL.push(SU);
+ }
+ if(!QX)return;
+ if(qx2On()&&!window.__QX2){for(let i=0;i<6;i++)if(QX["d"+i]&&L[i])L[i]=L[i].concat(QX["d"+i]);window.__QX2=1;window.__LV3=0}
+ if(lv3eOn()&&!window.__LV3){
+  L[6]=(QX[8]||[]).slice();L[7]=(QX[9]||[]).slice();L[8]=(QX[10]||[]).concat(QX[6]||[]);
+  const seen=new Set();L[9]=[5,6,7,8].flatMap(i=>L[i]||[]).filter(q=>!seen.has(q[1])&&seen.add(q[1]));
+  L[10]=(QX[7]||[]).concat(qx2On()?(QX.d7||[]):[]);window.__LV3=1;window.__LVM=1}
+};
+{const a0=window.lvmaxApply;window.lvmaxApply=function(){if(lv3eOn()){lv3eApply();return}const r=a0.apply(this,arguments);try{if(qx2On()&&QX&&L[7]&&!window.__QX2E&&window.__LVM&&QX.d7){L[7]=L[7].concat(QX.d7);window.__QX2E=1}lv3eApply()}catch(e){}return r}}
+{const n0=window.lvN;window.lvN=i=>lv3eOn()?(LV[i]||"Expert"):n0(i)}
+{const t0=window.survTop;window.survTop=()=>lv3eOn()?10:t0()}
+setInterval(()=>{try{lv3eApply()}catch(e){}},3000);
+{const s1=start;start=function(b,a){try{lv3eApply()}catch(e){}if(lv3eOn()&&(!L[6]||!L[9])){tell("⏳ Chargement des questions… réessaie dans quelques secondes.");return}const r=s1(b,a);try{if(lvMaxDmg()>1)setTimeout(()=>{try{qToast("🔥 Niveau Max : les dégâts reçus augmentent de 50 % !")}catch(e){}},600)}catch(e){}return r}}
+{const v1=survive;survive=function(){try{lv3eApply()}catch(e){}if(lv3eOn()&&!L[10]){tell("⏳ Chargement des questions… réessaie dans quelques secondes.");return}return v1()}}
 
 
 /* ---------- ✉️ Écrire au créateur (fonctionnalité « contact ») + Sac → Menu (« menu2 ») + raccourcis accueil (« homeb ») ---------- */

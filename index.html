@@ -5092,6 +5092,16 @@ window.lvrPop=k=>{try{if(!lvrOn()||!S||FIRST||ST.dev||S.lvrp)return;const p=lvPe
  S.lvrp=1;save();dlg(`🎁 Tu as <b>${p} récompense${p>1?"s":""} de niveau</b> à récupérer, grâce à tous les niveaux déjà gagnés !`,[["Plus tard",null,"dno"],["⭐ Voir la route",()=>openWin("lvr"),"dyes"]],{i:"⭐",t:"Route des niveaux"})}catch(e){}};
 {const _hl=home;home=function(){const r=_hl.apply(this,arguments);setTimeout(()=>{try{lvrPop(0)}catch(e){}},2200);return r}}
 </script><style>
+
+/* tuiles du Menu sans illustration + Route des niveaux : parchemin beige transparent */
+html body .win .mgrid .mt:not(.mtI):not(.mtlk){background:rgba(255,243,210,.6)!important;border:2px solid rgba(227,184,74,.95)!important;box-shadow:inset 0 0 0 2px rgba(255,243,207,.55),0 4px 10px rgba(0,0,0,.3)!important;border-radius:18px!important;backdrop-filter:blur(2px)}
+html body .win .mgrid .mt:not(.mtI):not(.mtlk) b{color:#3a1f06!important;text-shadow:0 1px 0 rgba(255,255,255,.6)!important;font-family:Georgia,"Times New Roman",serif}
+html body .win .mgrid .mt:not(.mtI):not(.mtlk) small{color:#5a3a12!important;text-shadow:none!important;font-weight:700}
+html body .lvbx.lvbx{background:rgba(255,243,210,.62)!important;border:2px solid rgba(227,184,74,.95)!important;box-shadow:inset 0 0 0 2px rgba(255,243,207,.55),0 4px 10px rgba(0,0,0,.3)!important;backdrop-filter:blur(2px)}
+html body .lvbx.lvbx *:not(.btn):not(.btn *):not(.prst):not(.prst *):not(.plvw):not(.plvw *){color:#2a1608!important;text-shadow:none!important}
+html body .lvbx .lvh b{color:#8a4a00!important}
+html body .lvbx .lvr{border-bottom-color:rgba(122,74,8,.25)!important;opacity:.7}html body .lvbx .lvr.ok{opacity:1;background:rgba(255,211,90,.45)!important}html body .lvbx .lvr.got{opacity:.9}
+html body .lvbx .lvn{background:rgba(122,74,8,.15)!important}
 .prst{display:inline-flex;align-items:flex-start;margin-right:3px;line-height:1}.prst,.prst *{-webkit-text-fill-color:initial;background-clip:border-box!important;-webkit-background-clip:border-box!important;filter:none!important;opacity:1!important}.plvw .prst{font-size:1.15rem;margin-right:4px;flex:none;z-index:2;position:relative}.prst b{font-size:.62em;font-weight:900;color:#fff!important;-webkit-text-fill-color:#fff!important;background:#c2410c;border-radius:8px;padding:0 3px;margin-left:-4px;line-height:1.25;border:1px solid #ffd35a}.prst.big{font-size:1.2em}
 .lvpd{font-style:normal;margin-left:4px;background:#e0342c;color:#fff;border-radius:999px;padding:0 6px;font-size:.75em;font-weight:900;border:1.5px solid #fff}
 .lvbx{padding:10px;border-radius:16px;background:rgba(10,16,52,.9);border:2px solid #e3b84a;color:#fff;text-align:center}.lvbx *{color:#fff}

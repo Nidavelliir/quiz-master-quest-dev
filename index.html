@@ -1223,7 +1223,7 @@ function pNew(){const n=prompt("Prénom du nouveau profil ?");if(n&&n.trim()){co
 function pDel(i){if(ST.ps[i]&&ST.ps[i].__rm){tell("La suppression d’un profil se fait sur son propre téléphone.");return}const p=ST.ps[i];if(!p)return;const last=ST.ps.filter(q=>!q.__rm).length<2;
  askD("Supprimer définitivement le profil "+p.pn+" avec sa collection, ses pièces et ses badges ?"+(last?" C’est le seul profil : tu pourras en créer un nouveau juste après.":""),()=>{
   if(last){ST.ps=[newP("Joueur 1")];ST.cur=0;if(!ST.dev)S=ST.ps[0];PPV=null;FIRST=true;save();try{pclose()}catch(e){}home();setTimeout(()=>{try{askName()}catch(e){}},300);return}
-  const c=ST.ps[ST.cur];ST.ps.splice(i,1);const k=ST.ps.indexOf(c);ST.cur=k<0?0:k;if(!ST.dev||S===p)S=ST.ps[ST.cur];PPV=null;save();pRef()},"Supprimer",{danger:1})}
+  try{if(window.pnRel&&p.pn&&p.id)pnRel(p.pn,p.id)}catch(e){}const c=ST.ps[ST.cur];ST.ps.splice(i,1);const k=ST.ps.indexOf(c);ST.cur=k<0?0:k;if(!ST.dev||S===p)S=ST.ps[ST.cur];PPV=null;save();pRef()},"Supprimer",{danger:1})}
 const THN=["nature","foudre","glace","eau","feu","vent","nocturne","gemmes","halloween"],THL=["🌿 Nature","⚡ Foudre","❄️ Glace","🌊 Eau","🔥 Feu","🌬️ Vent","🌙 Nocturne","💎 Gemmes","🎃 Halloween"];
 const applyTheme=()=>{if(S.hwn!==1){S.hwn=1;S.th=8;try{save()}catch(e){}}document.body.dataset.th=THN[S.th||0]||"nature"};
 {const _h=home;home=function(){applyTheme();_h()}}
@@ -5547,7 +5547,7 @@ window.acOut=()=>askD("Se déconnecter de ce compte ? Ses profils restent sauveg
 window.acDel=()=>askD("Supprimer définitivement ce compte et la sauvegarde en ligne de tous ses profils ? Les profils resteront seulement sur ce téléphone. C’est irréversible.",async()=>{
  const u=usr();if(!u||u.isAnonymous)return;msg("Suppression…");AC.sy=true;
  try{const x=await X(),au=x.au,fs=x.fs;if(isG(u))await au.reauthenticateWithPopup(u,new au.GoogleAuthProvider());
-  const q=await TO(fs.getDocs(fs.collection(x.db,"users",u.uid,"profiles")));for(const d of q.docs)await TO(fs.deleteDoc(d.ref));await TO(fs.deleteDoc(fs.doc(x.db,"users",u.uid)));try{await TO(fs.deleteDoc(fs.doc(x.db,"dir",await sha("qmq-dir:"+emOf(u).trim().toLowerCase()))))}catch(e){}for(const p of ST.ps){if(p&&p.fid&&!p.__rm){try{await TO(fs.deleteDoc(fs.doc(x.db,"players",p.fid)))}catch(e){}try{await TO(fs.deleteDoc(fs.doc(x.db,"users",u.uid,"fids",p.fid)))}catch(e){}}}
+  for(const p of ST.ps){if(p&&!p.__rm&&p.pn&&p.id&&window.pnRel){try{await pnRel(p.pn,p.id)}catch(e){}}}const q=await TO(fs.getDocs(fs.collection(x.db,"users",u.uid,"profiles")));for(const d of q.docs)await TO(fs.deleteDoc(d.ref));await TO(fs.deleteDoc(fs.doc(x.db,"users",u.uid)));try{await TO(fs.deleteDoc(fs.doc(x.db,"dir",await sha("qmq-dir:"+emOf(u).trim().toLowerCase()))))}catch(e){}for(const p of ST.ps){if(p&&p.fid&&!p.__rm){try{await TO(fs.deleteDoc(fs.doc(x.db,"players",p.fid)))}catch(e){}try{await TO(fs.deleteDoc(fs.doc(x.db,"users",u.uid,"fids",p.fid)))}catch(e){}}}
   const uid=u.uid;await au.deleteUser(u);accDel(uid);svA({});lsS(LSP,null);await au.signInAnonymously(x.auth).catch(()=>{});devCheckAcct();try{pclose()}catch(e){}AC.sy=false;msg("🗑️ Compte et sauvegarde en ligne supprimés. Les profils restent sur ce téléphone.",true)}
  catch(e){AC.sy=false;msg(errTxt(e))}},"Supprimer",{danger:1});
 

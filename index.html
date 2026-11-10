@@ -2069,7 +2069,7 @@ ST.dev=false;ST.dxv=0;ST.ps.forEach(p=>{if(p.cbk!=null){p.coins=p.cbk;delete p.c
 function pDex(i,keep){
  const old=$("pdx"),y=old&&old.querySelector(".lkb")?old.querySelector(".lkb").scrollTop:0;if(old)old.remove();
  const p=ST.ps[i],o=S;S=p;let h;try{h=dexBody()}finally{S=o}
- h=h.replace(/onclick="detail\((\d+)\)"/g,`onclick="pdMon(${i},$1)"`);
+ h=h.replace(/onclick="detail\((\d+)\)"/g,`onclick="pdMon(${i},$1)"`);h=h.replace('onclick="dxvNext()"',`onclick="dxvNext();pDex(${i},true)"`);
  const d=document.createElement("div");d.className="ov";d.id="pdx";d.style.zIndex=120;d.onclick=()=>d.remove();
  d.innerHTML=`<div class="card lkw" style="background:rgba(22,14,54,.98)!important;border-color:#7c63d6!important;width:100%;max-width:520px" onclick="event.stopPropagation()"><div class="lkf" style="display:flex;justify-content:space-between;align-items:center;padding-bottom:4px"><b style="font-size:1.05rem">📖 Velkipedia · ${esc(p.pn)} · ${p.dex.length}/${MD.length}</b><button class="wx" style="position:static" onclick="this.closest('.ov').remove()" aria-label="Fermer">✕</button></div><small class="trs" style="padding-bottom:6px">Touche un Velki pour en ajouter ou en retirer.${p.__rm?" Les changements arrivent sur son téléphone à sa prochaine connexion.":""}</small>${ST.dev?`<div class="pact" style="margin:0 0 6px"><button class="btn" style="text-align:center;padding:6px" onclick="pdAll(${i},1)">➕ Tous les manquants</button><button class="btn dg" style="text-align:center;padding:6px" onclick="pdAll(${i},0)">🗑️ Tout retirer</button></div>`:""}<div class="lkb">${h}</div></div>`;
  document.body.appendChild(d);if(keep){const k=d.querySelector(".lkb");if(k)k.scrollTop=y}}

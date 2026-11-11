@@ -2235,7 +2235,7 @@ const QD=[
 [24,"Bats un boss","boss",1,20],[25,"Bats ton record en mode survie","surv",1,20],[26,"Fais une partie en mode révision","rev",1,10],[27,"Gagne une zone d’aventure","zone",1,10],
 [28,"Ouvre un coffre","chop",1,10],[29,"Récupère tes pièces dans la Ville","citycol",1,10],[30,"Tourne la roue de la chance","wheel",1,10]
 ].map(a=>({id:a[0],t:a[1],ev:a[2],n:a[3],r:a[4],m:a[5],f:a[6]}));
-function qInit(){if(ST.dev||!S)return null;const t=todayK();let q=S.qd;if(!q||q.d!==t){const ids=QD.map(x=>x.id).sort(()=>Math.random()-.5).slice(0,2);q=S.qd={d:t,q:ids,p:{},c:{},sj:[]};save()}return q}
+function qInit(){if((ST.dev&&!window.PVW)||!S)return null;const t=todayK();let q=S.qd;if(!q||q.d!==t){const ids=QD.map(x=>x.id).sort(()=>Math.random()-.5).slice(0,2);q=S.qd={d:t,q:ids,p:{},c:{},sj:[]};save()}return q}
 function qList(){const q=qInit();return q?q.q.map(id=>{const d=QD.find(x=>x.id===id);return{d,p:Math.min(d.n,q.p[id]||0),c:!!q.c[id]}}):[]}
 function qToast(m){const d=document.createElement("div");d.className="qtoast";d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),3200)}
 function qEv(ev,v,x){try{xpEv(ev)}catch(e){}try{const q=qInit();if(!q)return;v=v==null?1:v;if(ev=="ok"&&x&&x.s){if(!q.sj.includes(x.s))q.sj.push(x.s);qEv("subj",q.sj.length)}

@@ -308,6 +308,34 @@ html body.b3 .win .wb .btn.btn.dg,html body.b3 .ov .card .btn.btn.dg,html body.b
 html body.b3 .win .wb .btn.btn.dvred,html body.b3 .ov .card .btn.btn.dvred,html body.b3 #pm .pmc .btn.btn.dvred{background:linear-gradient(#ff7262,#d82828 52%,#8e1010)!important}
 html body.b3 .win .wb .btn.btn.dno,html body.b3 .ov .card .btn.btn.dno,html body.b3 #pm .pmc .btn.btn.dno{background:linear-gradient(#c784ff,#8a32e3 52%,#561a9e)!important}
 html body.b3 .btn.btn:disabled{filter:grayscale(.6) brightness(.85)}
+html body.b3 .win .shcat>summary .gbar.gbar{display:flex!important;align-items:center;gap:10px;width:100%!important;box-sizing:border-box;min-height:78px;height:auto!important;aspect-ratio:auto!important;padding:6px 44px 6px 10px!important;background:linear-gradient(var(--g3,#62bfff,#1f72e3 52%,#123f9e))!important;border:3px solid #ffd76a!important;border-radius:26px!important;box-shadow:0 0 0 2px #7a4a0a,inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.22),0 5px 8px rgba(0,0,0,.45)!important;position:relative}
+html body.b3 .win .shcat>summary .gbar.gbar .gbl{position:static!important;flex:none;width:86px!important;height:66px!important;margin:0!important;background-position:center!important;background-size:contain!important;background-repeat:no-repeat!important;filter:drop-shadow(0 3px 2px rgba(0,0,0,.45))}
+html body.b3 .win .shcat>summary .gbar.gbar .gbr{display:none!important}
+html body.b3 .win .shcat>summary .gbar.gbar .gbt{position:static!important;flex:1;transform:none!important;font-family:inherit!important;font-weight:900!important;font-size:clamp(1.1rem,5.4vw,1.45rem)!important;color:#fff!important;-webkit-text-stroke:.6px rgba(40,20,0,.55);text-shadow:0 2px 0 rgba(0,0,0,.45)!important;text-align:center;line-height:1.1;width:auto!important;left:auto!important;top:auto!important}
+html body.b3 .win .shcat>summary .gbar.gbar::after{content:"▼";position:absolute;right:16px;top:50%;transform:translateY(-50%);color:#fff;font-size:1rem;text-shadow:0 1px 2px #000}
+html body.b3 .win .shcat[open]>summary .gbar.gbar::after{content:"▲"}
+html body.b3 .win .shcat>summary .gbar.gbar:has(.gbl[style*="sb_l_obj."]){--g3:#c784ff,#8a32e3 52%,#561a9e}
+html body.b3 .win .shcat>summary .gbar.gbar .gbl[style*="sb_l_obj."]{background-image:url(mi_inv.webp)!important}
+html body.b3 .win .shcat>summary .gbar.gbar:has(.gbl[style*="sb_l_fr."]){--g3:#62bfff,#1f72e3 52%,#123f9e}
+html body.b3 .win .shcat>summary .gbar.gbar .gbl[style*="sb_l_fr."]{background-image:url(mi_sfr.webp)!important}
+html body.b3 .win .shcat>summary .gbar.gbar:has(.gbl[style*="sb_l_ti."]){--g3:#ffd866,#f5a01a 52%,#c46a00}
+html body.b3 .win .shcat>summary .gbar.gbar .gbl[style*="sb_l_ti."]{background-image:url(mi_sti.webp)!important}
+html body.b3 .win .shcat>summary .gbar.gbar:has(.gbl[style*="sb_l_th."]){--g3:#ff7262,#d82828 52%,#8e1010}
+html body.b3 .win .shcat>summary .gbar.gbar:has(.gbl[style*="sb_l_eph."]){--g3:#7be872,#22a032 52%,#0c6a1a}
+html body.b3 .win .shcat>summary .gbar.gbar .gbl[style*="sb_l_eph."]{background-image:url(mi_shop.webp)!important}
+html body.b3 .win .shcat>summary .gbar.gbar:has(.gbl[style*="sb_l_0."]){--g3:#62bfff,#1f72e3 52%,#123f9e}
+html body.b3 .win .shcat>summary .gbar.gbar .gbl[style*="sb_l_th."]{background-image:none!important;font-style:normal}html body.b3 .win .shcat>summary .gbar.gbar .gbl[style*="sb_l_th."]::before{content:"🎬";font-size:2.8rem;line-height:66px;display:block;text-align:center}
+html body.b3 .win .shcat.shlk>summary .gbar.gbar{filter:grayscale(.9);opacity:.6}
+html body.b3 .win .eqt2 button{display:flex!important;align-items:center;justify-content:center;gap:8px;min-height:64px;padding:6px 10px!important;background:linear-gradient(#62bfff,#1f72e3 52%,#123f9e)!important;border:3px solid #ffd76a!important;border-radius:26px!important;box-shadow:0 0 0 2px #7a4a0a,inset 0 3px 0 rgba(255,255,255,.45),inset 0 -5px 0 rgba(0,0,0,.22),0 5px 8px rgba(0,0,0,.45)!important;opacity:.75}
+html body.b3 .win .eqt2 button.on{opacity:1;background:linear-gradient(#ffd866,#f5a01a 52%,#c46a00)!important}
+html body.b3 .win .eqt2 button img{display:none!important}
+html body.b3 .win .eqt2 button::before{content:"";width:56px;height:50px;flex:none;background:url(mi_inv.webp) center/contain no-repeat;filter:drop-shadow(0 2px 2px rgba(0,0,0,.45))}
+html body.b3 .win .eqt2 button[aria-label="Craft"]::before{background-image:url(mi_craft.webp)}
+html body.b3 .win .eqt2 button::after{content:attr(aria-label);font-weight:900;font-size:1.25rem;color:#fff;-webkit-text-stroke:.6px rgba(40,20,0,.55);text-shadow:0 2px 0 rgba(0,0,0,.45)}
+html body.b3 .win .eqt2{gap:10px!important;padding:6px 8px!important}
+html body.b3 .win .shcat>summary .gbar.gbar::before{display:none!important}
+html body.b3 .win .shcat>summary .gbar.gbar .gbt{padding:0!important;background:none!important}
+html body.b3 .win .shcat>summary .gbar.gbar .gbl{aspect-ratio:auto!important}
 </style>
 </head><body><main>
 <h1>⚔️ La Quête du Savoir</h1>
